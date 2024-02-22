@@ -1,6 +1,8 @@
 import { baseURL } from "../constant/constant";
 
 export const html: string = ` <div class="wiuwidgetBox active">
+<div class="wiucursor"></div>
+<div class="wiucursor_white  "></div>
 <div class="wiuwidgetBox__top">
   <h5>Accessibility Menu</h5>
   <a class="wiuwidgetBox__close">
@@ -42,25 +44,25 @@ export const html: string = ` <div class="wiuwidgetBox active">
       <img src="${baseURL}/widget-ui/v2/img/icon3-active.svg">
     </div>
     <h4>Larger Text</h4>
-    <span class="wiustepBox">
+    <span class="wiustepBox largetTextSpan">
       <span></span>
       <span></span>
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem4">
+  <div class="wiuitem wiuitem4 spaceBetweenText">
     <div class="wiuicon">
       <img src="${baseURL}/widget-ui/v2/img/icon4.svg">
       <img src="${baseURL}/widget-ui/v2/img/icon4-active.svg">
     </div>
     <h4>Text Spacing</h4>
-    <span class="wiustepBox">
+    <span class="wiustepBox ">
       <span></span>
       <span></span>
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem5">
+  <div class="wiuitem wiuitem5 hideImg">
     <div class="wiuicon">
       <img src="${baseURL}/widget-ui/v2/img/icon5.svg">
       <img src="${baseURL}/widget-ui/v2/img/icon5-active.svg">
@@ -72,16 +74,15 @@ export const html: string = ` <div class="wiuwidgetBox active">
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem6">
+  <div class="wiuitem wiuitem6 cursorItem">
     <div class="wiuicon">
       <img src="${baseURL}/widget-ui/v2/img/icon6.svg">
       <img src="${baseURL}/widget-ui/v2/img/icon6-active.svg">
     </div>
     <h4>Cursor</h4>
-    <span class="wiustepBox">
+    <span class="wiustepBox cursorSpanWrap">
       <span></span>
       <span></span>
-      <span style="display: none;"></span>
     </span>
   </div>
   <div class="wiuitem wiuitem7">
