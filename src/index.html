@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>CorpoWid</title>
+  <link rel="stylesheet"
+    href="https://www.salespro.az/themes/gosmart/assets/front/libs/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://www.salespro.az/themes/gosmart/assets/front/libs/normalize.css/normalize.css" />
+  <link rel="stylesheet"
+    href="https://www.salespro.az/themes/gosmart/assets/front/libs/OverlayScrollbars-master/css/OverlayScrollbars.min.css" />
+  <link rel="stylesheet" href="https://www.salespro.az/themes/gosmart/assets/front/css/main.min.css?v1" />
+  <link href="https://www.salespro.az/themes/gosmart/assets/css/back.css?v=12" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/style.scss" />
+  <script type="module" src="js/index.ts"></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light ">
+        <div class="container-fluid" style="padding: 0;">
+          <a class="navbar-brand" href="#">
+            <img src="https://www.salespro.az/themes/gosmart/assets/front/img/logoHeader.png" alt="">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" style="justify-content: flex-end;" id="navbarText">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#profil">
+                  Profil yaradılması</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#profilactive">Profilin
+                  aktivləşdirilməsi</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#search">Axtarış nəticələri
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#about">Haqqqımızda</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contact">Bizimlə əlaqə</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="home">
+      <div class="home__login">
+        <div class="container">
+          <div class="home__loginWrapper">
+            <div class="home__loginLeft">
+              <img src="https://www.salespro.az/storage/app/media/initial/login.png" alt="">
+              <div class="home__loginLink">
+                <h1>Qeydiyyatdan keç</h1>
+                <div class="home__loginLink--btn">
+                  <a href="https://www.salespro.az/az/register"> Namizəd kimi</a>
+                  <a href="https://www.salespro.az/az/company/register"> İşəgötürən kimi </a>
+                </div>
+              </div>
+            </div>
+            <div class="home__loginRight">
+              <h2>Salespro nədir?</h2>
+              <p class="oc-text-spaced">İşəgötürənlər üçün Satıcı, Supervayzer, Merçendayzer, Promouter, Sürücü,
+                Ofisiant və digər mütəxəssislərinin axtarış sistemidir. Sistemin əsas istifadəçiləri istehsalçı və
+                distribütor şirkətləri, supermarket şəbəkələri, geyim, ayaqqabı, elektronika və məişət avadanlığı
+                satış mağazaları və digər işəgötürənlərdir.</p>
+              <p>
+                <br>
+              </p>
+              <div class=" home__loginRight--formBox ">
+                <form method="POST" action="https://www.salespro.az/az" accept-charset="UTF-8" data-request="onSignin"
+                  data-request-files="1" enctype="multipart/form-data"><input name="_session_key" type="hidden"
+                    value="uct965EeY6JQzk3Sav0acDbibHbvpBFkGOfADoT5"><input name="_token" type="hidden"
+                    value="Wr2w6RmVu33huQhRmObbU8g73g4brpw97fHCUQFk">
+                  <div class="form-group">
+                    <input id="user" type="email" class="form-control" placeholder="İstifadəçi adı" name="login">
+                  </div>
+                  <div class="form-group">
+                    <input id="pass" type="password" name="password" class="form-control" placeholder="Şifrə">
+                  </div>
+                  <div class="home__loginRight--end">
+                    <p>
+                      <input type="checkbox" alt="">
+                      Məlumatları yadda saxla
+                    </p>
+                    <p>
+                      <a href="https://www.salespro.az/az/reset-pasword"> Şifrəni unutmusunuz?</a>
+                    </p>
+                  </div>
+                  <div class="home__loginRight--submitBtn">
+                    <button type="submit">
+                      Daxil ol
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="home__about" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine" id="about">
+        <div class="container">
+          <div class="home__about--info">
+            <h4>Haqqımızda</h4>
+            <p class="oc-text-spaced">Salespro sistemində Namizədlər və İşəgötürənlər olmaqla 2 istifadəçi qrupu
+              mövcuddur. Hər iki qrup müstəqil şəkildə sistemdə qeydiyyatdan keçə bilir. İşəgötürənlər nəzərdə
+              tutduqları axtarış kriteriyalarını (iş təcrübəsi, yaş, təhsil, əmək haqqı gözləntisi və s.) təyin edir
+              və sistem aktiv namizədlərin tam siyahısını işəgötürənə təqdim edir. İşədüzəltmə şirkətlərindən fərqli
+              olaraq sistemdə heç bir işəgötürənə və ya namizədə üstünlük yaradılmır.</p>
+            <p class="oc-text-spaced">Axtarış filterlərinə əsasən seçilmiş namizədlər ilə əlaqə yaratmaq üçün şəxsi
+              məlumatlar bölməsində qeyd edilmiş telefon nömrəsi, email ünvanı və s. vasitələrdən hər hansı biri
+              istifadə oluna bilər. Namizəd ilə əlaqə yaratmaq üçün işəgötürən birbaşa olaraq Salespro sistemində
+              namizədin kartında qeyd olunmuş məlumatlara əsaslanır.</p>
+          </div>
+        </div>
+      </div>
+      <div class="home__items" data-aos="fade-right" data-aos-offset="300" id="profil" data-aos-easing="ease-in-sine">
+        <div class="home__eachBox" style="background-color: #f2f2f2;">
+          <div class="container">
+            <div class="home__eachBoxWrapper">
+              <img src="https://www.salespro.az/storage/app/media/initial/for1.png" alt="">
+              <div class="home__eachBoxWrapper--items">
+                <h4>Profil yaradılması</h4>
+                <p class="oc-text-spaced">Siz, sistemdə namizəd kimi qeydiyyatdan keçərək şəxsi kabinetinizdə
+                  profilinizi yaratmağa başlayırsınız. Şəxsi məlumatlarınız, iş təcrübəniz, təhsiliniz, xüsusi
+                  bacarıqlarınız, dil bilikləriniz, sertifikatlarınız, sizə maraqlı olan vəzifələr, əmək haqqı
+                  gözləntiniz, iş qrafiki istəyiniz, sizə maraqlı olan şirkətlər və digər seçimləri qeyd edərək heç
+                  bir ödənişsiz, çap oluna bilən elektron CV nizi yaratmış olursunuz. İstədiyiniz zaman profil
+                  məlumatlarınızı dəyişmək, CV nizi yeniləmək və paylaşmaq üçün yükləmək mümkündür.</p>
+                <p class="oc-text-spaced">Burada namizəd olaraq sizin üzərinizə düşən əsas iş öz profil
+                  məlumatlarınızı dəqiq və ətraflı daxil etməkdir. Çünki qeyd etdiyiniz hər bir məlumat axtarış
+                  nəticələrində önə çıxmanız üçün xüsusi əhəmiyyət daşıyır. Namizədlər öz profilində onlar üçün
+                  maraqlı olan vəzifə adları və şirkət adlarını qeyd edə bilirlər. Bu şəkildə onların profili qeyd
+                  etdikləri vəzifələr və şirkət axtarışlarında önə çıxmış olur. Bundan əlavə namizədlər onların
+                  profilinə olan baxış saylarını da izləyə bilirlər.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="home__eachBox" data-aos="fade-right" data-aos-offset="300" id="profilactive"
+          data-aos-easing="ease-in-sine" style="background-color: #6669c6;">
+          <div class="container">
+            <div class="home__eachBoxWrapper">
+              <img src="https://www.salespro.az/storage/app/media/initial/for2.png" alt="">
+              <div class="home__eachBoxWrapper--items">
+                <h4>Profilin aktivləşdirilməsi</h4>
+                <div data-aos="fade-right" data-aos-easing="ease-in-sine" data-aos-offset="300">
+                  <p class="oc-text-spaced">Sistemdə qeydiyyatınızı bitirdikdən sonra siz öz profilinizi aktivləşdirə
+                    bilərsiniz. Profili aktivləşdirmək sizin axtarış nəticələrində görünməyiniz üçün lazımdır. Əgər
+                    sizin profiliniz aktiv deyilsə, haqqınızda olan məlumat ancaq özünüz üçün açıq olacaq,
+                    işəgötürənlər isə sizin profil məlumatlarını görə bilməyəcək. Proflinizin aktivləşdirilməsi üçün
+                    sizin haqqınızda tələb olunan bəzi məlumatları mütləq doldurmalı və profilinizin aktiv qalma
+                    müddətini seçməlisiniz. Aktivləşdirmə ilə bağlı daha ətraflı məlumatı profil yaratdıqdan sonra
+                    əldə edə biləcəksiniz.</p>
+                </div>
+                <div data-aos="fade-right" data-aos-easing="ease-in-sine" data-aos-offset="300">
+                  <br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="home__eachBox" data-aos="fade-right" data-aos-offset="300" id="search"
+          data-aos-easing="ease-in-sine">
+          <div class="container">
+            <div class="home__eachBoxWrapper">
+              <img src="https://www.salespro.az/storage/app/media/initial/for3.png" alt="">
+              <div class="home__eachBoxWrapper--items">
+                <h4>Axtarış nəticələri</h4>
+                <main>
+                  <section>
+                    <div data-aos="fade-right" data-aos-easing="ease-in-sine" data-aos-offset="300">
+                      <div data-aos="fade-right" data-aos-easing="ease-in-sine" data-aos-offset="300">
+                        <p class="oc-text-spaced">Salespro sistemi xüsusi axtarış alqoritmləri ilə çalışır. Sizin
+                          profildə qeyd etdiyiniz hər bir məlumat işəgötürənlər üçün axtarış sözüdür. Misal üçün, əgər
+                          siz minimal əmək haqqı gözləntinizi 1000 Azn olaraq qeyd etmisinizsə və işəgötürən 800 Azn
+                          əmək haqqı səviyyəsi üçün əməkdaş axtarırsa bu halda sizin profil məlumatınız həmin
+                          işəgötürənə göstərilməyəcək. Və yaxud, deyək ki, sürücülük vəsiqənizin olduğunu profilinizdə
+                          qeyd etməyi unutmusunuz. Bu halda sürücülük vəsiqəsi olan əməkdaş axtarışı üçün nəticələrdə
+                          sizin profil məlumatlarınız görünməyəcək. Bu səbəbdən profilinizi mümkün qədər ətraflı
+                          doldurun və məlumatların dəqiq olmasına xüsusi diqqət yetirin.</p>
+                      </div>
+                    </div>
+                  </section>
+                </main>
+                <footer>
+                  <p>
+                    <br>
+                  </p>
+                </footer>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="home__eachBox home__contactWrapper" data-aos="fade-right" data-aos-offset="300" id="contact"
+          data-aos-easing="ease-in-sine">
+          <div class="container">
+            <div class="home__contact">
+              <div class="home__title">
+                <div class="home__title--left">
+                  <h4>Bizimlə əlaqə</h4>
+                  <p>Hər hansı bir suallarınız və ya tövsiyələriniz üçün zəng edin:&nbsp;</p>
+                  <p>+994 10 376 76 67 və ya aşağıdakı formu doldurun.</p>
+                  <p><a href="https://salespro.az/az/salespro-istifadeci-razilasmasi" target="_blank">Privacy
+                      policy</a></p>
+                </div>
+                <div class="home__title--right">
+                  <h4>Baş ofis ünvanı</h4>
+                  <p>Bakı şəhəri, Binəqədi rayonu, Xarici dairəvi küç. 3121-ci məhəllə</p>
+                  <a href="tel:+994 10 376 76 67">
+                    <svg data-bbox="25.849 20.098 148.61 159.903" xmlns="http://www.w3.org/2000/svg" width="200"
+                      height="200" viewBox="0 0 200 200" data-type="shape">
+                      <g>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M70.759 24.278c-2.483-4.574-7.721-5.499-11.759-2.255L43 35.18c-20.174 16.202-23.035 44.171-6 63.76l56 64.772c17.02 19.572 46.23 21.812 66 5.06l12-10.121c3.953-3.35 4.827-8.637 1-12.145l-28-25.301c-3.815-3.497-9.893-4.152-14-1.012l-15 14.169-45-51.616L84 69.59c4-3.036 6-9.109 4-13.157L70.759 24.278z">
+                        </path>
+                      </g>
+                    </svg>
+                    Bizə zəng edin
+                  </a>
+                </div>
+              </div>
+              <div class="home__contactForm">
+                <form>
+                  <div class="home__contactFormWrapper">
+                    <div class="home__contactForm--left">
+                      <div class="form-group">
+                        <label for="">Email ünvanı*</label>
+                        <input type="text" class="form-control" id="" placeholder="Daxil edin">
+                      </div>
+                      <div class="form-group">
+                        <label for="">Ad/Soyad</label>
+                        <input type="text" class="form-control" id="" placeholder="Daxil edin">
+                      </div>
+                      <div class="form-group">
+                        <label for="">Şirkət</label>
+                        <input type="text" class="form-control" id="" placeholder="Daxil edin">
+                      </div>
+                    </div>
+                    <div class="home__contactForm--right">
+                      <div class="form-group">
+                        <label for="">Sorğunuzun detallarını burada paylaşın</label>
+                        <textarea type="text" class="form-control" id="" placeholder="Daxil edin"></textarea>
+                      </div>
+                      <div class="home__contactForm--submit">
+                        <button type="submit">
+                          Göndər
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__flex">
+        <p>SALESPRO 2024</p>
+        <p>
+          <a href="mailto:jhungoog@gmail.com">
+            jhungoog@gmail.com
+          </a>
+          <a href="tel:+994 10 376 76 67">
+            +994 10 376 76 67
+          </a>
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
