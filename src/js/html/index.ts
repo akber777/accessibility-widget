@@ -1,8 +1,13 @@
 import { baseURL } from "../constant/constant";
 
-export const html: string = ` <div class="wiuwidgetBox active">
+export const html: string = ` 
+<div class="corpoWid_button_-_start">
+  <img src="${baseURL}/widget-ui/v2/img/7.svg" />
+</div>
+<div class="wiuwidgetBox">
 <div class="wiucursor"></div>
-<div class="wiucursor_white  "></div>
+<div class="wiucursor_white"></div>
+<div id="wiureadingMask" class="wiureadingMask-box"></div>
 <div class="wiuwidgetBox__top">
   <h5>Accessibility Menu</h5>
   <a class="wiuwidgetBox__close">
@@ -14,7 +19,7 @@ export const html: string = ` <div class="wiuwidgetBox active">
   <img class="wiupositionBtn" src="${baseURL}/widget-ui/v2/img/arrow-left.svg">
 </div>
 <div class="wiuwidgetBox__items">
-  <div class="wiuitem wiuitem1 contrastButton">
+  <div class="wiuitem wiuitem1 contrastButton"  tabindex="0">
     <div class="wiuicon">
       <img src="${baseURL}/widget-ui/v2/img/icon1.svg">
       <img src="${baseURL}/widget-ui/v2/img/icon1-active.svg">
@@ -26,7 +31,7 @@ export const html: string = ` <div class="wiuwidgetBox active">
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem2 linkSection">
+  <div class="wiuitem wiuitem2 linkSection"  tabindex="0">
     <div class="wiuicon">
       <img src="${baseURL}/widget-ui/v2/img/icon2.svg">
       <img src="${baseURL}/widget-ui/v2/img/icon2-active.svg">
@@ -38,7 +43,7 @@ export const html: string = ` <div class="wiuwidgetBox active">
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem3 largerText">
+  <div class="wiuitem wiuitem3 largerText"  tabindex="0">
     <div class="wiuicon">
       <img src="${baseURL}/widget-ui/v2/img/icon3.svg">
       <img src="${baseURL}/widget-ui/v2/img/icon3-active.svg">
@@ -50,7 +55,7 @@ export const html: string = ` <div class="wiuwidgetBox active">
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem4 spaceBetweenText">
+  <div class="wiuitem wiuitem4 spaceBetweenText"  tabindex="0">
     <div class="wiuicon">
       <img src="${baseURL}/widget-ui/v2/img/icon4.svg">
       <img src="${baseURL}/widget-ui/v2/img/icon4-active.svg">
@@ -62,7 +67,7 @@ export const html: string = ` <div class="wiuwidgetBox active">
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem5 hideImg">
+  <div class="wiuitem wiuitem5 hideImg"  tabindex="0">
     <div class="wiuicon">
       <img src="${baseURL}/widget-ui/v2/img/icon5.svg">
       <img src="${baseURL}/widget-ui/v2/img/icon5-active.svg">
@@ -74,18 +79,18 @@ export const html: string = ` <div class="wiuwidgetBox active">
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem6 cursorItem">
+  <div class="wiuitem wiuitem6 cursorItem"  tabindex="0">
     <div class="wiuicon">
       <img src="${baseURL}/widget-ui/v2/img/icon6.svg">
       <img src="${baseURL}/widget-ui/v2/img/icon6-active.svg">
     </div>
     <h4>Cursor</h4>
-    <span class="wiustepBox cursorSpanWrap">
+    <span class="wiustepBox cursorSpanWrap"  tabindex="0">
       <span></span>
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem7">
+  <div class="wiuitem wiuitem7 readMask"  tabindex="0">
     <div class="wiuicon">
       <img src="${baseURL}/widget-ui/v2/img/icon7.svg">
       <img src="${baseURL}/widget-ui/v2/img/icon7-active.svg">
@@ -97,19 +102,19 @@ export const html: string = ` <div class="wiuwidgetBox active">
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem8">
+  <div class="wiuitem wiuitem8 lineHeight"  tabindex="0">
     <div class="wiuicon">
       <img src="${baseURL}/widget-ui/v2/img/icon8.svg">
       <img src="${baseURL}/widget-ui/v2/img/icon8-active.svg">
     </div>
     <h4>Line Height</h4>
-    <span class="wiustepBox">
+    <span class="wiustepBox lineTextSpan"  tabindex="0">
       <span></span>
       <span></span>
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem9">
+  <div class="wiuitem wiuitem9 dyslexiaBtn"  tabindex="0">
     <div class="wiuicon">
       <img src="${baseURL}/widget-ui/v2/img/icon9.svg">
       <img src="${baseURL}/widget-ui/v2/img/icon9-active.svg">
@@ -121,7 +126,7 @@ export const html: string = ` <div class="wiuwidgetBox active">
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem10">
+  <div class="wiuitem wiuitem10 monochrome"  tabindex="0">
     <div class="wiuicon">
       <img src="${baseURL}/widget-ui/v2/img/icon10.svg">
       <img src="${baseURL}/widget-ui/v2/img/icon10-active.svg">
@@ -134,7 +139,7 @@ export const html: string = ` <div class="wiuwidgetBox active">
     </span>
   </div>
 </div>
-<h4 class="wiuwidgetBox__copyright">
+<h4 class="wiuwidgetBox__copyright" >
   <span class="wiucopyText">Accessibility widget for your site</span>
   <a href="https://www.corpowid.com/en" target="_blank">
     <img src="${baseURL}/widget-ui/v2/img/logo.svg" class="wiulogo">
@@ -150,14 +155,14 @@ export const html: string = ` <div class="wiuwidgetBox active">
     <div class="form-group form-group1">
       <label>
         <span>Left</span>
-        <input type="radio" value="1" name="position">
+        <input type="radio" value="1" name="position" class="leftBtn">
         <span class="checkmark"></span>
       </label>
     </div>
     <div class="form-group form-group2">
       <label>
         <span>Right</span>
-        <input type="radio" name="position" value="2" checked="true">
+        <input type="radio" name="position" value="2" checked="true" class="rightBtn">
         <span class="checkmark"></span>
       </label>
     </div>

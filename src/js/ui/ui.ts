@@ -1,28 +1,26 @@
-import Button from "@/src/js/ui/button/button";
 import Body from "@/src/js/ui/body/body";
 
+type UiSetup = {
+  styleWidgetIcon: Record<string, string | number>;
+};
+
 class Ui {
-  constructor() {
-    this.setup();
+  setupOptions: UiSetup;
+
+  constructor({ styleWidgetIcon }: UiSetup) {
+    this.setupOptions = {
+      styleWidgetIcon,
+    };
+    this.setup(this.setupOptions.styleWidgetIcon);
   }
 
-  setup() {
-    new Button({
-      elementType: "a",
-      rootElement: "body",
-      style: {
-        position: "fixed",
-        bottom: 0,
-        right: 0,
-        cursor: "pointer",
-      },
-    });
-
+  setup(e: UiSetup["styleWidgetIcon"]) {
     new Body({
+      styleWidgetIcon: e,
       rootElement: "body",
       styleCdnOptions: [
         {
-          href: `https://corpowid.com/themes/corpowid/assets/widget/v2/main.min.css?v${
+          href: `https://res.cloudinary.com/dlzoqroo0/raw/upload/v1708720488/index.626ac570_o9n0bt.css?v${
             Math.random() * 1000
           }`,
           tag: "head",
@@ -36,7 +34,7 @@ class Ui {
           rel: "stylesheet",
         },
       ],
-      headStyleTag: `<link rel="stylesheet" href="https://corpowid.com/themes/corpowid/assets/widget/v2/main.min.css?v${
+      headStyleTag: `<link rel="stylesheet" href="https://res.cloudinary.com/dlzoqroo0/raw/upload/v1708720488/index.626ac570_o9n0bt.css?v${
         Math.random() * 1000
       }" />`,
     });

@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.cdnfonts.com/css/open-dyslexic");
+
 fieldset,
 hr {
   border: 0;
@@ -51,8 +54,806 @@ textarea {
   background: #ccc;
   color: #000;
   padding: 0.2em 0;
+} /*! WEBCODER - http://webcoder.az/ Mehemmed Memmedli  16 Aprel 2016  https://github.com/nemerki */
+* {
+  box-sizing: inherit;
+  box-sizing: border-box;
+}
+.sm-space {
+  word-spacing: 0.16em !important;
+  letter-spacing: 0.12em !important;
+}
+.md-space {
+  word-spacing: 0.32em !important;
+  letter-spacing: 0.24em !important;
+}
+.lg-space {
+  word-spacing: 0.48em !important;
+  letter-spacing: 0.36em !important;
+}
+.font-od {
+  font-family: "Open-Dyslexic" !important;
+  font-weight: bold;
+}
+.filter {
+  filter: grayscale(100%) !important;
+}
+.body-grey {
+  background: #e3e3e3 !important;
 }
 
+.dark-contrast {
+  transition: all 0s ease 0s;
+  background-color: #000 !important;
+  border-color: #fff !important;
+  color: #0cf !important;
+}
+.dark-contrast .menu li .int_bank {
+  background: 0 !important;
+}
+.dark-contrast .boxes_list li a,
+.search_button2 {
+  background: 0 0 !important;
+}
+.wiucursor,
+.wiucursor_white {
+  width: 50px;
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent !important;
+}
+.wiucursor {
+  position: fixed;
+  background-image: url(https://front.gocreative.az/widget-ui/v2/img/icon6.svg) !important;
+  z-index: 20000000000000000;
+  display: none;
+  pointer-events: none;
+}
+.wiucursor.active {
+  display: block;
+}
+.wiucursor_white {
+  position: fixed;
+  background-image: url(https://front.gocreative.az/widget-ui/v2/img/cursor-white.svg) !important;
+  z-index: 20000000000000000;
+  display: none;
+  pointer-events: none;
+}
+.wiureadingMask,
+.wiureadingMask-box {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  pointer-events: none;
+  z-index: 2147483647 !important;
+  top: 0;
+}
+.highlight,
+.highlight span,
+.menu li .int_bank.highlight {
+  background-color: #000 !important;
+  color: #ff0 !important;
+}
+.wiucursor_white.active {
+  display: block;
+}
+body.no-cursor * {
+  cursor: none !important;
+}
+.highlight,
+.highlight span {
+  transition: all 0.3s ease 0s;
+  border-color: #000 !important;
+  line-height: 33.25px !important;
+  text-decoration: underline !important;
+}
+.wiureadingMask {
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  background: 0 0 !important;
+}
+.wiureadingMask-box {
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
+  height: 150px;
+  border-top: 5px solid #2353ff;
+  border-bottom: 5px solid #2353ff;
+  background: 0 0 !important;
+  display: none;
+}
+.wiuwidgetBox {
+  position: fixed !important;
+  width: 42.8rem;
+  top: 0;
+  height: 100vh;
+  border-radius: 2.4rem 0 0 2.4rem;
+  border: 1px solid #e9e9e9;
+  background: #fff !important;
+  box-shadow: 0 10px 21px 0 rgba(0, 0, 0, 0.1),
+    0 39px 39px 0 rgba(0, 0, 0, 0.09), 0 87px 52px 0 rgba(0, 0, 0, 0.05),
+    0 155px 62px 0 rgba(0, 0, 0, 0.01), 0 243px 68px 0 transparent;
+  z-index: 2147483646 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.6rem 1.6rem 6rem;
+  right: -100%;
+  transition: all 0.2s ease-in-out;
+  overflow: hidden;
+}
+@media (max-width: 575px) {
+  .wiuwidgetBox {
+    width: 100vw;
+  }
+}
+.wiuwidgetBox.active {
+  right: 0;
+}
+.wiuwidgetBox.wL {
+  right: auto;
+  left: -100% !important;
+  border-radius: 0 2.4rem 2.4rem 0;
+}
+.wiuwidgetBox.wL.active {
+  left: 0 !important;
+}
+.wiuwidgetBox.wN {
+  width: 10rem;
+  padding-bottom: 1.6rem;
+}
+.wiuwidgetBox.wN .wiuitem {
+  padding: 1.6rem;
+  width: 100%;
+}
+.wiuwidgetBox.wN .wiuitem .wiuicon {
+  margin-bottom: 0;
+}
+.wiuwidgetBox.wN .wiuitem h4 {
+  display: none;
+}
+.wiuwidgetBox.wN .wiuitem:not(:nth-child(2n)) {
+  margin-right: 0;
+}
+.wiuwidgetBox__top {
+  border-radius: 3.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: #2353ff !important;
+  box-shadow: 0 0 0 1px rgba(35, 83, 255, 0.16);
+  padding: 1.4rem 2rem 1.2rem;
+  position: relative;
+}
+.wiuwidgetBox__top h5 {
+  text-align: center;
+  text-transform: capitalize;
+  letter-spacing: 0 !important;
+  font-size: 1.6rem !important;
+  word-spacing: 0 !important;
+  color: #fff !important;
+  background: 0 0 !important;
+  line-height: 22.5px !important;
+  margin-bottom: 0;
+  font-family: "Inter Tight" !important;
+  font-weight: 500 !important;
+}
+.wiuwidgetBox__close,
+.wiuwidgetBox__size {
+  position: absolute;
+  width: 3.2rem;
+  height: 3.2rem;
+  top: 0.8rem;
+  line-height: 20.5px !important;
+  background: 0 0 !important;
+  cursor: pointer;
+}
+.wiuwidgetBox.wN .wiuwidgetBox__top {
+  display: flex;
+  justify-content: center;
+}
+.wiuwidgetBox.wN .wiuwidgetBox__close,
+.wiuwidgetBox.wN .wiuwidgetBox__size,
+.wiuwidgetBox.wN .wiuwidgetBox__top h5 {
+  display: none;
+}
+.wiuwidgetBox__close {
+  right: 0.7rem;
+}
+.wiuwidgetBox__close img {
+  background: 0 0 !important;
+}
+.wiuwidgetBox__size {
+  left: 0.7rem;
+}
+.wiuwidget__resetBtn,
+.wiuwidget__resetBtn span {
+  color: #2353ff !important;
+  font-size: 1.6rem !important;
+  line-height: 22.5px !important;
+}
+.wiuwidgetBox__size img {
+  background: 0 0 !important;
+}
+.wiupositionBtn,
+.wiupositionBtn img {
+  display: none !important;
+  background: 0 0 !important;
+}
+.wN .wiupositionBtn,
+.wN .wiupositionBtn img {
+  display: block !important;
+}
+.wN .wiupositionBtn {
+  transform: rotate(-180deg);
+}
+.wL .wiupositionBtn {
+  transform: rotate(0);
+}
+.wN .widgetDropdown .dropdownBtn {
+  justify-content: center;
+}
+.wN .widgetDropdown .dropdownImg {
+  margin-right: 0;
+}
+.wN .widgetDropdown {
+  padding: 2rem;
+}
+.wN .wiuwidgetBox__items .wiuitem .wiuicon img {
+  width: 50%;
+}
+.wN .wiuwidgetBox__items .wiuitem:nth-child(6) .wiuicon img {
+  width: 28%;
+}
+.wN .wiuwidgetBox__items .wiuitem {
+  height: 6rem;
+  padding: 0;
+  border: unset;
+}
+.wN .wiuwidgetBox__items .wiuitem .wiuicon {
+  width: 100%;
+  height: 100%;
+}
+.wN .wiuwidgetBox__items .wiuitem.active,
+.wN .wiuwidgetBox__items .wiuitem:hover {
+  border: unset;
+  box-shadow: unset;
+}
+.wN .wiuwidgetBox__items .wiuitem .wiuicon:hover,
+.wN .wiuwidgetBox__items .wiuitem.active .wiuicon,
+.wN .wiuwidgetBox__items .wiuitem:hover .wiuicon {
+  border-color: #0795ff !important;
+}
+.wL .wiuwidgetBox__size img {
+  transform: rotate(-180deg);
+}
+
+.wiuwidgetBtn {
+  position: fixed !important;
+  left: 3.5rem;
+  bottom: 1.5rem;
+  width: 8.1rem;
+  height: 11.1rem;
+  z-index: 20000 !important;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  background: 0 0 !important;
+}
+@media (max-width: 575px) {
+  .wiuwidgetBtn {
+    left: 1rem;
+    bottom: 0;
+  }
+}
+.wiuwidgetBtn:hover {
+  transform: scale(1.1);
+}
+.wiuwidgetBtn.rotate {
+  -webkit-animation-name: spin;
+  animation-name: spin;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-iteration-count: 2;
+  animation-iteration-count: 2;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+.wiuwidgetBtn img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  background: 0 0 !important;
+}
+.wiuwidgetBtn.wL {
+  left: auto;
+  right: 3.5rem;
+}
+.wiuwidget__resetBtn {
+  border-radius: 32px;
+  border: 1px solid #2353ff;
+  border-color: #2353ff !important;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.38) 0,
+    rgba(255, 255, 255, 0) 77.03%
+  ) !important;
+  box-shadow: 0 0 0 1px rgba(35, 83, 255, 0.16);
+  position: relative;
+  font-family: "Inter Tight", Helvetica, Arial, sans-serif;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+  letter-spacing: 0 !important;
+  word-spacing: 0 !important;
+  padding: 1.4rem 2rem;
+  cursor: pointer;
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.wiuwidgetBox__items .wiuitem h4,
+.wiuwidget__resetBtn span {
+  font-family: "Inter Tight" !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0 !important;
+  font-weight: 500 !important;
+}
+.wiuwidget__resetBtn:hover {
+  text-decoration: none;
+  opacity: 0.7;
+}
+.wiuwidget__resetBtn span {
+  background: 0 0 !important;
+  text-decoration: none !important;
+}
+.wiuwidget__resetBtn img {
+  width: 27px;
+  height: 27px;
+  left: auto;
+  background: 0 0 !important;
+  margin-right: 1rem;
+}
+.wN .wiuwidget__resetBtn img {
+  margin-right: 0;
+  position: relative;
+  top: auto;
+  transform: unset;
+  left: auto;
+}
+.wN .wiuwidget__resetBtn span {
+  display: none;
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.wiuwidgetBox__items {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 1.3rem;
+  overflow-y: auto;
+  background-color: transparent !important;
+  height: 85%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+@media (max-width: 575px) {
+  .wiuwidgetBox__items {
+    height: 80%;
+  }
+}
+.wiuwidgetBox__items:-webkit-scrollbar {
+  display: none;
+}
+.wiuwidgetBox__items .wiuitem {
+  border-radius: 20.33px;
+  border: 1.69px solid rgba(54, 54, 54, 0.1);
+  background: #fff !important;
+  border-color: rgba(54, 54, 54, 0.1) !important;
+  padding: 3.2rem 0;
+  width: calc((100% - 1.6rem) / 2);
+  margin-bottom: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s linear;
+  cursor: pointer;
+  position: relative;
+  height: 16.9rem;
+}
+.wiuwidgetBox__items .wiuitem.active,
+.wiuwidgetBox__items .wiuitem:hover {
+  border-radius: 20.33px;
+  border: 1.69px solid #0795ff;
+  border-color: #0795ff !important;
+  background: #fff;
+  box-shadow: 0 7.62px 16.94px 0 rgba(0, 0, 0, 0.1),
+    0 30.49px 30.49px 0 rgba(0, 0, 0, 0.09),
+    0 69.46px 41.5px 0 rgba(0, 0, 0, 0.05),
+    0 122.82px 49.13px 0 rgba(0, 0, 0, 0.01), 0 191.42px 53.36px 0 transparent;
+}
+@media (max-width: 991px) {
+  .wiuwidget__resetBtn span {
+    font-size: 1.4rem !important;
+  }
+  .wiuwidgetBox__items .wiuitem {
+    transition: unset;
+    height: auto;
+  }
+  .wiuwidgetBox__items .wiuitem:nth-child(6),
+  .wiuwidgetBox__items .wiuitem:nth-child(7) {
+    display: none;
+  }
+}
+.wiuwidgetBox__items .wiuitem:not(:nth-child(2n)) {
+  margin-right: 1.6rem;
+}
+.wiuwidgetBox__items .wiuitem .wiuicon {
+  border-radius: 11.01px;
+  border: 0.85px solid #eae9f5;
+  padding: 1.65rem 0.932rem;
+  width: 5.5rem;
+  height: 5.2rem;
+  position: relative;
+  z-index: 0;
+  margin-bottom: 2.33rem;
+  box-shadow: 0 0.85px 0.85px 0 rgba(120, 120, 120, 0.1),
+    0 1.69px 1.69px 0 rgba(120, 120, 120, 0.09),
+    0 4.24px 2.54px 0 rgba(120, 120, 120, 0.05),
+    0 8.47px 3.39px 0 rgba(120, 120, 120, 0.01),
+    0 12.71px 3.39px 0 rgba(120, 120, 120, 0);
+  background: #fff !important;
+}
+.wiuwidgetBox__items .wiuitem .wiuicon img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.1s linear;
+  background: #fff !important;
+}
+.wiuwidgetBox__items .wiuitem .wiuicon img:first-child {
+  z-index: 2;
+}
+.wiuwidgetBox__items .wiuitem .wiuicon img:last-child {
+  opacity: 0;
+}
+.wiuwidgetBox__items .wiuitem.active .wiuicon img:last-child {
+  z-index: 2;
+  opacity: 1;
+}
+.wiuwidgetBox__items .wiuitem h4 {
+  font-size: 1.3552rem !important;
+  color: #434350 !important;
+  line-height: normal !important;
+  background: #fff !important;
+}
+.removeBcg {
+  background-image: unset !important;
+}
+.wiuwidgetDropdown {
+  border-radius: 2.4rem;
+  border: 2px solid rgba(54, 54, 54, 0.1);
+  background: #fff !important;
+  border-color: rgba(54, 54, 54, 0.1) !important;
+  padding: 2rem 2.4rem 1.5rem;
+  margin: 2rem 0;
+}
+.wiuwidgetDropdown .wiudropdownBtn {
+  display: flex;
+  position: relative;
+  z-index: 0;
+  cursor: pointer;
+  background: #fff !important;
+}
+.wiuwidgetDropdown .wiudropdownBtn h5 {
+  color: #434350 !important;
+  background: #fff !important;
+  font-size: 1.6rem !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0 !important;
+  line-height: normal !important;
+  font-family: "Inter Tight" !important;
+  font-weight: 500 !important;
+}
+.wiuwidgetDropdown .wiudropdownBody label,
+.wiuwidgetDropdown .wiudropdownBody label span {
+  line-height: normal;
+  color: #434350 !important;
+  background: #fff !important;
+  font-size: 1.6rem !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0 !important;
+  font-family: "Inter Tight" !important;
+}
+.wiuwidgetDropdown .wiudropdownImg {
+  width: 2rem;
+  height: 2rem;
+  -o-object-fit: cover;
+  object-fit: cover;
+  margin-right: 0.8rem;
+  background: #fff !important;
+}
+.wiuwidgetDropdown .wiudropdownDown {
+  position: absolute;
+  right: 0;
+  transition: all 0.3s ease-in-out;
+  background: #fff !important;
+}
+.wiuwidgetDropdown .wiudropdownDown.active {
+  transform: rotate(-180deg);
+}
+.wiuwidgetDropdown .wiudropdownBody {
+  padding-top: 1rem;
+  display: none;
+  background: #fff !important;
+}
+.wiuwidgetDropdown .wiudropdownBody .form-group:first-child {
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid #eee;
+}
+.wiuwidgetDropdown .wiudropdownBody label {
+  position: relative;
+  padding: 1.6rem 0;
+  display: flex;
+  width: 100% !important;
+}
+.wiuwidgetDropdown .wiudropdownBody label span {
+  font-weight: 500 !important;
+}
+.wiuwidgetDropdown .wiudropdownBody input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.wiuwidgetDropdown .wiudropdownBody .checkmark {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  height: 2.4rem;
+  width: 2.4rem;
+  background: #eee !important;
+  border-radius: 50%;
+}
+.wiuwidgetDropdown .wiudropdownBody .checkmark::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 7px solid #2353ff;
+  background: #fff !important;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 50%;
+  display: none;
+}
+.wN .wiuwidgetDropdown,
+.wN .wiuwidgetDropdown .wiudropdownBtn h5 {
+  display: none;
+}
+.wN .wiuwidgetDropdown .wiudropdownDown {
+  display: none !important;
+}
+.wN .wiuwidgetDropdown label {
+  color: transparent !important;
+}
+.wiuwidgetBox__copyright,
+.wiuwidgetBox__copyright a {
+  color: #434350 !important;
+  letter-spacing: 0 !important;
+}
+.wiudropdownBody input:checked ~ .checkmark:after {
+  display: block;
+}
+.wiustepBox {
+  width: 70%;
+  justify-content: center;
+  margin-top: 1rem;
+  display: none;
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: 0 0 !important;
+}
+.wiustepBox span {
+  width: 30%;
+  border-radius: 4px;
+  display: inline-block;
+  height: 3px;
+  background: #d3d3d3 !important;
+  transition: all 0.2s ease-in-out;
+}
+.wiustepBox span.active {
+  background: linear-gradient(180deg, #2353ff 0, #00a3ff 100%) !important;
+}
+.wiustepBox span:not(:last-child) {
+  margin-right: 0.4rem;
+}
+@media (max-width: 991px) {
+  .wiustepBox.mobil {
+    display: flex;
+  }
+  .wiustepBox.mobil span {
+    background: linear-gradient(180deg, #2353ff 0, #00a3ff 100%) !important;
+  }
+  .wiustepBox.mobil span:last-child,
+  .wiustepBox.mobil span:nth-child(1) {
+    display: none;
+  }
+}
+.wiuwidgetBox__copyright,
+.wiuwidgetBox__copyright a,
+.wiuwidgetBox__copyright span {
+  line-height: normal !important;
+  background: #fff !important;
+}
+.wN .wiustepBox {
+  bottom: 1rem;
+  width: 60%;
+}
+.wiuwidgetBox__copyright {
+  font-size: 1.3552rem !important;
+  word-spacing: 0 !important;
+  position: absolute;
+  bottom: 0.5rem;
+  font-family: "Inter Tight" !important;
+  text-align: center;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  font-weight: 500 !important;
+}
+.wiuwidgetBox__copyright span {
+  font-size: 1.3552rem !important;
+  color: #434350 !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0 !important;
+  font-family: "Inter Tight" !important;
+}
+.wiulangSwitcher__btn,
+.wiulangSwitcher__drp .wiulangItem:not(.langSwitcher__drp-close),
+.wiulangSwitcher__drp .wiulangItem:not(.langSwitcher__drp-close) span {
+  text-decoration: none !important;
+  font-size: 1.6rem !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0 !important;
+  color: #434350 !important;
+}
+.wiuwidgetBox__copyright .wiulogo {
+  width: 9rem;
+  -o-object-fit: cover;
+  object-fit: cover;
+  margin-left: 0.5rem;
+  margin-bottom: 0.6rem;
+  background: 0 0 !important;
+}
+.wN .wiuwidgetBox__copyright {
+  display: none;
+}
+.wiulangSwitcher {
+  margin-top: 2rem;
+  background: #fff !important;
+}
+.wiulangSwitcher__btn {
+  line-height: normal;
+  background: #fff !important;
+  position: relative;
+  padding-right: 2rem;
+  font-family: "Inter Tight" !important;
+  font-weight: 500 !important;
+}
+.wiulangSwitcher__btn::after {
+  content: "";
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  right: 0;
+  top: 1px;
+  background-image: url(https://front.gocreative.az/widget-ui/v2/img/mdi_chevron-down.svg);
+  background-size: cover;
+  transition: all 0.2s ease-in-out;
+}
+.wiulangSwitcher__btn.active::after {
+  transform: rotate(-180deg);
+}
+.wiulangSwitcher__drp {
+  position: absolute;
+  width: 92.5%;
+  height: 85%;
+  background: #fff !important;
+  overflow: auto;
+  top: 7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  border-radius: 2rem;
+  padding: 4rem 2rem;
+  display: none;
+  border: 1.69px solid rgba(54, 54, 54, 0.1);
+  border-color: rgba(54, 54, 54, 0.1) !important;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.wiulangSwitcher__drp:-webkit-scrollbar {
+  display: none;
+}
+.wiulangSwitcher__drp .wiulangItem:not(.langSwitcher__drp-close) {
+  display: flex;
+  width: 50%;
+  line-height: normal;
+  background: #fff !important;
+  align-items: center;
+  padding: 0.8rem;
+  font-family: "Inter Tight" !important;
+  border-radius: 20px;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  font-weight: 500 !important;
+  font-weight: bold;
+}
+.wiulangSwitcher__drp .wiulangItem:not(.langSwitcher__drp-close).active,
+.wiulangSwitcher__drp .wiulangItem:not(.langSwitcher__drp-close):hover {
+  background-color: #f5f5f5 !important;
+}
+.wiulangSwitcher__drp .wiulangItem:not(.langSwitcher__drp-close) span {
+  background: 0 0 !important;
+  font-family: "Inter Tight" !important;
+}
+.wiulangSwitcher__drp .wiulangItem:not(.langSwitcher__drp-close) img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  margin-right: 2rem;
+}
+.wiulangSwitcher__drp-close {
+  line-height: normal;
+  color: #434350 !important;
+  font-family: "Inter Tight" !important;
+  text-decoration: none;
+  position: absolute;
+  top: 1.5rem;
+  right: 3.5rem;
+  height: 2.5rem;
+  padding: 0;
+  margin-bottom: 0;
+  width: auto !important;
+  font-size: 2.6rem !important;
+  transition: all 0.3s ease-in-out;
+  background: #fff !important;
+}
+.wiulangSwitcher__drp-close::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  content: "\2715";
+} /*! WEBCODER - http://webcoder.az/ Mehemmed Memmedli  16 Aprel 2018  https://github.com/nemerki */
 .hidden {
   display: none !important;
 }
@@ -141,4 +942,47 @@ textarea {
   h3 {
     page-break-after: avoid;
   }
+}
+
+.open-corpoWid-_drop {
+  display: block !important;
+}
+
+.wiuitem:focus {
+  background: #fff;
+  border: 1.69px solid #0795ff;
+  border-radius: 20.33px;
+  box-shadow: 0 7.62px 16.94px #0000001a, 0 30.49px 30.49px #00000017,
+    0 69.46px 41.5px #0000000d, 0 122.82px 49.13px #00000003,
+    0 191.42px 53.36px #0000;
+  border-color: #0795ff !important;
+  outline: none !important;
+}
+
+.wiuitem:active {
+  background: #fff;
+  border: 1.69px solid #0795ff;
+  border-radius: 20.33px;
+  box-shadow: 0 7.62px 16.94px #0000001a, 0 30.49px 30.49px #00000017,
+    0 69.46px 41.5px #0000000d, 0 122.82px 49.13px #00000003,
+    0 191.42px 53.36px #0000;
+  border-color: #0795ff !important;
+  outline: none !important;
+}
+
+.corpoWid_button_-_start.wL {
+  position: fixed !important;
+  left: 3.5rem !important;
+  bottom: 1.5rem !important;
+  width: 8.1rem !important;
+  height: 11.1rem !important;
+  z-index: 20000 !important;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer !important;
+  background: 0 0 !important;
+}
+
+.corpoWid_button_-_start.wL {
+  left: auto !important;
+  right: 3.5rem !important;
 }

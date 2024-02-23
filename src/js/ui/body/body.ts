@@ -9,17 +9,24 @@ type BodyOptions = {
     tag: HtmlType;
     rel: string;
   }[];
+  styleWidgetIcon: Record<string, string | number>;
   headStyleTag: string;
 };
 
 class Body {
   setupBodyOptions: BodyOptions;
 
-  constructor({ rootElement, styleCdnOptions, headStyleTag }: BodyOptions) {
+  constructor({
+    rootElement,
+    styleCdnOptions,
+    headStyleTag,
+    styleWidgetIcon,
+  }: BodyOptions) {
     this.setupBodyOptions = {
       rootElement,
       styleCdnOptions,
       headStyleTag,
+      styleWidgetIcon,
     };
 
     this.setupBody();
@@ -49,6 +56,30 @@ class Body {
     });
 
     shadowRoot.innerHTML += html;
+
+    const openWidgetbtn = shadowDomContainer.shadowRoot?.querySelector(
+      ".corpoWid_button_-_start"
+    ) as HTMLDivElement;
+
+    const widgetWrap = shadowDomContainer.shadowRoot?.querySelector(
+      ".wiuwidgetBox"
+    ) as HTMLDivElement;
+
+    for (const key in this.setupBodyOptions.styleWidgetIcon) {
+      const item: any = key;
+
+      const checkType =
+        typeof this.setupBodyOptions.styleWidgetIcon[key] === "number"
+          ? "px"
+          : "";
+
+      openWidgetbtn.style[item] =
+        this.setupBodyOptions.styleWidgetIcon[key] + checkType;
+    }
+
+    openWidgetbtn.addEventListener("click", function () {
+      widgetWrap.classList.toggle("active");
+    });
 
     new MotionEvent({
       shadowDom: shadowDomContainer,

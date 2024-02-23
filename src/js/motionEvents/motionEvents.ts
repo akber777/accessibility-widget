@@ -1,28 +1,44 @@
-import { defaultFont } from "@/src/js/constant/constant";
-
 type EventOptions = {
   shadowDom: Element | null;
+  reset: Array<() => void>;
 };
 
 class Event {
   options: EventOptions;
 
-  constructor({ shadowDom }: EventOptions) {
+  constructor({ shadowDom, reset }: EventOptions) {
     this.options = {
       shadowDom,
+      reset,
     };
-    this.changeContrast();
-    this.changeLinkSection();
-    this.largerText();
-    this.spaceBetweenText();
-    this.hideImg();
-    this.changeCursorView();
+    reset = [
+      this.changeContrast(),
+      this.changeLinkSection(),
+      this.largerText(),
+      this.spaceBetweenText(),
+      this.hideImg(),
+      this.changeCursorView(),
+      this.readMask(),
+      this.lineHeight(),
+      this.dyslexia(),
+      this.monochrome(),
+      this.openSettingDropDown(),
+    ];
+
+    this.changeWidgetPosition();
+    this.resizeWidget();
+    this.closeWidget();
+    this.openWidget();
+
+    this.resetAllParameters(reset);
   }
 
-  getAllElementForRealDom(e: string): Element[] {
+  getAllElementForRealDom(e: string, except?: string): Element[] {
     const elementsArray: Element[] = [];
     const querySelectorAllHtmlElement = document.querySelectorAll(
-      `${e}:not(style,head,script,meta,title,link,html)`
+      `${e}:not(style,head,script,meta,title,link,html, ${
+        except || "undefined"
+      })`
     );
 
     querySelectorAllHtmlElement.forEach((element) => {
@@ -32,10 +48,12 @@ class Event {
     return elementsArray;
   }
 
-  getAllElementForShadowDom(e: string): Element[] {
+  getAllElementForShadowDom(e: string, except?: string): Element[] {
     const elementsArray: Element[] = [];
     const querySelectorAllHtmlElement =
-      this.options.shadowDom?.shadowRoot?.querySelectorAll(`${e}`);
+      this.options.shadowDom?.shadowRoot?.querySelectorAll(
+        `${e}:not(${except || "undefined"})`
+      );
 
     querySelectorAllHtmlElement?.forEach((element) => {
       elementsArray.push(element);
@@ -56,6 +74,15 @@ class Event {
         item.classList.toggle("dark-contrast");
       });
     });
+
+    return function reset() {
+      console.log("ok");
+
+      contrastButton?.classList.remove("active");
+      that.getAllElementForRealDom("*").forEach((item) => {
+        item.classList.remove("dark-contrast");
+      });
+    };
   }
 
   changeLinkSection() {
@@ -70,6 +97,13 @@ class Event {
         item.classList.toggle("highlight");
       });
     });
+
+    return function reset() {
+      linkSectionButton?.classList.remove("active");
+      that.getAllElementForRealDom("a").forEach((item) => {
+        item.classList.remove("highlight");
+      });
+    };
   }
 
   largerText() {
@@ -87,7 +121,7 @@ class Event {
 
     let count = 0;
 
-    let increaseFont = 18;
+    let increaseFont = 16;
 
     largerTextButton?.addEventListener("click", function (e) {
       largeTextSpan?.forEach((item, index) => {
@@ -100,9 +134,8 @@ class Event {
         }
       });
 
-      largerTextButton.classList.toggle("active");
-
       if (count < 3) {
+        largerTextButton.classList.add("active");
         if (largeTextWrapSpan instanceof HTMLElement) {
           largeTextWrapSpan.style.display = "flex";
         }
@@ -111,7 +144,8 @@ class Event {
         increaseFont += 2;
       } else {
         count = 0;
-        increaseFont = 18;
+        increaseFont = 16;
+        largerTextButton.classList.remove("active");
         largeTextWrapSpan?.classList.remove("active");
         if (largeTextWrapSpan instanceof HTMLElement) {
           largeTextWrapSpan.style.display = "none";
@@ -120,18 +154,26 @@ class Event {
 
       that.getAllElementForRealDom("*").forEach((item) => {
         if (item instanceof HTMLElement) {
-          if (increaseFont === 18) {
+          if (increaseFont === 16) {
             item.style.fontSize = "";
 
             return;
           }
-
           item.style.transition = "none";
-
           item.style.fontSize = increaseFont + "px";
         }
       });
     });
+
+    return function reset() {
+      count = 0;
+      increaseFont = 16;
+      largerTextButton?.classList.remove("active");
+      largeTextWrapSpan?.classList.remove("active");
+      if (largeTextWrapSpan instanceof HTMLElement) {
+        largeTextWrapSpan.style.display = "none";
+      }
+    };
   }
 
   spaceBetweenText() {
@@ -146,6 +188,10 @@ class Event {
         item.classList.toggle("sm-space");
       });
     });
+
+    return function reset() {
+      spaceBetweenText?.classList.remove("active");
+    };
   }
 
   hideImg() {
@@ -168,19 +214,35 @@ class Event {
         if (item instanceof HTMLElement) {
           if (clicked) {
             item.style.display = "none";
-            item.classList.add("removeBcg");
           } else {
             item.style.display = "";
+          }
+        }
+      });
+
+      that.getAllElementForRealDom("*", "img").forEach((item) => {
+        if (item instanceof HTMLElement) {
+          if (clicked) {
+            item.classList.add("removeBcg");
+          } else {
             item.classList.remove("removeBcg");
           }
         }
       });
     });
+
+    return function reset() {
+      hideImg?.classList.remove("active");
+      clicked = false;
+    };
   }
 
   changeCursorView() {
     const cursorItem =
       this.options.shadowDom?.shadowRoot?.querySelector(".cursorItem");
+
+    const cursorTitle =
+      this.options.shadowDom?.shadowRoot?.querySelector(".cursorItem > h4");
 
     const cursorBlack =
       this.options.shadowDom?.shadowRoot?.querySelector(".wiucursor");
@@ -208,12 +270,19 @@ class Event {
         if (cursorSpanWrap instanceof HTMLElement) {
           cursorSpanWrap.style.display = "flex";
         }
+
         that.moveCursor(cursorBlack);
+        if (cursorTitle) {
+          cursorTitle.textContent = "Cursor Black";
+        }
       } else if (count < 2) {
         count++;
         cursorWhite?.classList.add("active");
         cursorBlack?.classList.remove("active");
         that.moveCursor(cursorWhite);
+        if (cursorTitle) {
+          cursorTitle.textContent = "Cursor White";
+        }
       } else {
         cursorBlack?.classList.remove("active");
         cursorWhite?.classList.remove("active");
@@ -222,6 +291,9 @@ class Event {
         count = 0;
         if (cursorSpanWrap instanceof HTMLElement) {
           cursorSpanWrap.style.display = "none";
+        }
+        if (cursorTitle) {
+          cursorTitle.textContent = "Cursor";
         }
       }
 
@@ -235,6 +307,23 @@ class Event {
         }
       });
     });
+
+    return function reset() {
+      cursorBlack?.classList.remove("active");
+      cursorWhite?.classList.remove("active");
+      cursorItem?.classList.remove("active");
+      if (cursorTitle) cursorTitle.textContent = "Cursor";
+      if (cursorSpanWrap instanceof HTMLElement) {
+        cursorSpanWrap.style.display = "none";
+      }
+
+      that.moveCursor(null);
+      count = 0;
+
+      cursorSpan?.forEach((item) => {
+        item.classList.remove("active");
+      });
+    };
   }
 
   moveCursor(elem: Element | null | undefined) {
@@ -263,6 +352,280 @@ class Event {
         elem.style.top = mouseY + "px";
       }
     }
+  }
+
+  readMask() {
+    document.addEventListener("mousemove", mouseDragging);
+
+    const readMaskButton =
+      this.options.shadowDom?.shadowRoot?.querySelector(".readMask");
+
+    const readMaskWrapper =
+      this.options.shadowDom?.shadowRoot?.getElementById("wiureadingMask");
+
+    let click = false;
+
+    readMaskButton?.addEventListener("click", function () {
+      readMaskButton.classList.toggle("active");
+      readMaskWrapper?.classList.toggle("active");
+
+      if (readMaskWrapper) {
+        if (!click) {
+          readMaskWrapper.style.display = "block";
+          click = true;
+        } else {
+          readMaskWrapper.style.display = "none";
+          click = false;
+        }
+      }
+    });
+
+    function mouseDragging(e: MouseEvent) {
+      const mouseY = e.clientY;
+
+      if (readMaskWrapper instanceof HTMLElement) {
+        readMaskWrapper.style.top = mouseY + "px";
+      }
+    }
+
+    return function reset() {
+      click = false;
+      readMaskButton?.classList.remove("active");
+      readMaskWrapper?.classList.remove("active");
+      if (readMaskWrapper) readMaskWrapper.style.display = "none";
+    };
+  }
+
+  lineHeight() {
+    const lineHeight =
+      this.options.shadowDom?.shadowRoot?.querySelector(".lineHeight");
+
+    const lineTextWrapSpan =
+      this.options.shadowDom?.shadowRoot?.querySelector(".lineTextSpan");
+
+    const lineTextSpan = this.options.shadowDom?.shadowRoot?.querySelectorAll(
+      ".lineTextSpan > span"
+    );
+
+    const that = this;
+
+    let count = 0;
+
+    let lineHeightVal = 20;
+
+    lineHeight?.addEventListener("click", function (e) {
+      lineTextSpan?.forEach((item, index) => {
+        if (index == count) {
+          item.classList.add("active");
+        } else {
+          if (count === 0) {
+            item.classList.remove("active");
+          }
+        }
+      });
+
+      lineTextWrapSpan?.classList.toggle("active");
+
+      if (count < 3) {
+        if (lineTextWrapSpan instanceof HTMLElement) {
+          lineTextWrapSpan.style.display = "flex";
+        }
+        lineHeight.classList.add("active");
+
+        count++;
+        lineHeightVal += 4;
+      } else {
+        count = 0;
+        lineHeightVal = 20;
+        lineHeight.classList.remove("active");
+        lineTextWrapSpan?.classList.remove("active");
+
+        if (lineTextWrapSpan instanceof HTMLElement) {
+          lineTextWrapSpan.style.display = "none";
+        }
+      }
+
+      that.getAllElementForRealDom("*").forEach((item) => {
+        if (item instanceof HTMLElement) {
+          if (lineHeightVal === 20) {
+            item.style.lineHeight = "";
+
+            return;
+          }
+
+          item.style.transition = "none";
+
+          item.style.lineHeight = lineHeightVal + "px";
+        }
+      });
+    });
+
+    return function reset() {
+      count = 0;
+      lineHeightVal = 20;
+      lineHeight?.classList.remove("active");
+
+      if (lineTextWrapSpan instanceof HTMLElement) {
+        lineTextWrapSpan.style.display = "none";
+      }
+      lineTextWrapSpan?.classList.remove("active");
+    };
+  }
+
+  dyslexia() {
+    const dyslexiaButton =
+      this.options.shadowDom?.shadowRoot?.querySelector(".dyslexiaBtn");
+    const that = this;
+
+    dyslexiaButton?.addEventListener("click", function () {
+      dyslexiaButton.classList.toggle("active");
+
+      that.getAllElementForRealDom("*").forEach((item) => {
+        if (dyslexiaButton.classList.contains("active")) {
+          item.classList.add("font-od");
+        } else {
+          item.classList.remove("font-od");
+        }
+      });
+    });
+
+    return function reset() {
+      dyslexiaButton?.classList.remove("active");
+    };
+  }
+
+  monochrome() {
+    const monochrome =
+      this.options.shadowDom?.shadowRoot?.querySelector(".monochrome");
+
+    monochrome?.addEventListener("click", function () {
+      monochrome.classList.toggle("active");
+      document.querySelector("html")?.classList.toggle("filter");
+    });
+
+    return function reset() {
+      monochrome?.classList.remove("active");
+      document.querySelector("html")?.classList.remove("filter");
+    };
+  }
+
+  openSettingDropDown() {
+    const settingButton =
+      this.options.shadowDom?.shadowRoot?.querySelector(".wiudropdownBtn");
+
+    const settingsDropdown =
+      this.options.shadowDom?.shadowRoot?.querySelector(".wiudropdownBody");
+
+    settingButton?.addEventListener("click", function () {
+      settingsDropdown?.classList.toggle("open-corpoWid-_drop");
+    });
+
+    return function reset() {
+      settingsDropdown?.classList.remove("open-corpoWid-_drop");
+    };
+  }
+
+  changeWidgetPosition() {
+    const leftBtn =
+      this.options.shadowDom?.shadowRoot?.querySelector(".leftBtn");
+
+    const rightbtn =
+      this.options.shadowDom?.shadowRoot?.querySelector(".rightBtn");
+
+    const wrapperWidget =
+      this.options.shadowDom?.shadowRoot?.querySelector(".wiuwidgetBox");
+
+    const widgetBtn = this.options.shadowDom?.shadowRoot?.querySelector(
+      ".corpoWid_button_-_start"
+    );
+
+    leftBtn?.addEventListener("click", setPosition.bind(null, "wL", "add"));
+    rightbtn?.addEventListener("click", setPosition.bind(null, "wL", "remove"));
+
+    function setPosition(e: string, event: "add" | "remove") {
+      wrapperWidget?.classList[event](e);
+      widgetBtn?.classList[event](e);
+    }
+  }
+
+  resizeWidget() {
+    const widgetWrapper =
+      this.options.shadowDom?.shadowRoot?.querySelector(".wiuwidgetBox");
+
+    const widgetBoxResizeBtn =
+      this.options.shadowDom?.shadowRoot?.querySelector(".wiuwidgetBox__size");
+
+    const widgetBoxResizeReverseBtn =
+      this.options.shadowDom?.shadowRoot?.querySelector(".wiupositionBtn");
+
+    widgetBoxResizeBtn?.addEventListener("click", function () {
+      widgetWrapper?.classList.add("wN");
+    });
+
+    widgetBoxResizeReverseBtn?.addEventListener("click", function () {
+      widgetWrapper?.classList.remove("wN");
+    });
+  }
+
+  closeWidget() {
+    const widgetClosebtn = this.options.shadowDom?.shadowRoot?.querySelector(
+      ".wiuwidgetBox__close"
+    );
+
+    const widgetWrapper =
+      this.options.shadowDom?.shadowRoot?.querySelector(".wiuwidgetBox");
+
+    widgetClosebtn?.addEventListener("click", function () {
+      widgetWrapper?.classList.remove("active");
+    });
+  }
+
+  openWidget() {
+    const widgetWrapper =
+      this.options.shadowDom?.shadowRoot?.querySelector(".wiuwidgetBox");
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const widgetCloseButtonWrapper = document.querySelector(
+        ".corpoWid_button_-_start"
+      );
+      widgetCloseButtonWrapper?.addEventListener("click", function () {
+        widgetWrapper?.classList.toggle("active");
+      });
+    });
+  }
+
+  resetAllParameters(reset: EventOptions["reset"]) {
+    const allUsedClasses = [
+      "dark-contrast",
+      "sm-space",
+      "removeBcg",
+      "font-od",
+      "filter",
+      "highlight",
+    ];
+
+    const resetBtn = this.options.shadowDom?.shadowRoot?.querySelector(
+      ".wiuwidget__resetBtn"
+    ) as HTMLElement;
+
+    const that = this;
+
+    resetBtn.addEventListener("click", function () {
+      // Real Dom
+      that.getAllElementForRealDom("*").forEach((item) => {
+        allUsedClasses.forEach((e) => {
+          item.classList.remove(e);
+
+          if (item instanceof HTMLElement) {
+            item.style.cssText = "";
+          }
+        });
+      });
+
+      reset.forEach((item) => {
+        item();
+      });
+    });
   }
 }
 
