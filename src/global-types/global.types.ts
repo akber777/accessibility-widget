@@ -135,3 +135,19 @@ export type HtmlType =
   | "video"
   | "wbr"
   | "xmp";
+
+export type DictionaryCountry =
+  | "az"
+  | "tr"
+  | "en"
+  | "ru"
+  | "es"
+  | "fr"
+  | "de"
+  | "kz"
+  | "it"
+  | "ko"
+  | "me"
+  | "uz";
+
+export type IDictionary = Record<string, Record<DictionaryCountry, string>>;

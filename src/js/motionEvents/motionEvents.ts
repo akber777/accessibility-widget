@@ -1,17 +1,19 @@
+import { DictionaryCountry } from "@/src/global-types/global.types";
+import { dictionary } from "../dictionary/dictionary";
+
 type EventOptions = {
   shadowDom: Element | null;
-  reset: Array<() => void>;
+  reset?: Array<() => void>;
 };
 
 class Event {
   options: EventOptions;
 
-  constructor({ shadowDom, reset }: EventOptions) {
+  constructor(props: EventOptions) {
     this.options = {
-      shadowDom,
-      reset,
+      ...props,
     };
-    reset = [
+    props.reset = [
       this.changeContrast(),
       this.changeLinkSection(),
       this.largerText(),
@@ -23,6 +25,7 @@ class Event {
       this.dyslexia(),
       this.monochrome(),
       this.openSettingDropDown(),
+      this.openLang(),
     ];
 
     this.changeWidgetPosition();
@@ -30,7 +33,7 @@ class Event {
     this.closeWidget();
     this.openWidget();
 
-    this.resetAllParameters(reset);
+    this.resetAllParameters(props.reset);
   }
 
   getAllElementForRealDom(e: string, except?: string): Element[] {
@@ -76,8 +79,6 @@ class Event {
     });
 
     return function reset() {
-      console.log("ok");
-
       contrastButton?.classList.remove("active");
       that.getAllElementForRealDom("*").forEach((item) => {
         item.classList.remove("dark-contrast");
@@ -257,56 +258,144 @@ class Event {
       ".cursorSpanWrap > span"
     );
 
-    let count = 0;
+    const getLang = (localStorage.getItem("corpoWid-lang") ||
+      "az") as DictionaryCountry;
+
+    let count = Number(localStorage.getItem("corpoWid-cursor-type")) || 0;
 
     const that = this;
 
-    cursorItem?.addEventListener("click", function () {
-      cursorItem.classList.add("active");
+    cursorItem?.addEventListener("click", (e) =>
+      startCursorChange.call(null, e, true)
+    );
 
-      if (count < 1) {
-        count++;
-        cursorBlack?.classList.add("active");
-        if (cursorSpanWrap instanceof HTMLElement) {
-          cursorSpanWrap.style.display = "flex";
-        }
+    startCursorChange(null, false);
 
-        that.moveCursor(cursorBlack);
-        if (cursorTitle) {
-          cursorTitle.textContent = "Cursor Black";
-        }
-      } else if (count < 2) {
-        count++;
-        cursorWhite?.classList.add("active");
-        cursorBlack?.classList.remove("active");
-        that.moveCursor(cursorWhite);
-        if (cursorTitle) {
-          cursorTitle.textContent = "Cursor White";
-        }
-      } else {
-        cursorBlack?.classList.remove("active");
-        cursorWhite?.classList.remove("active");
-        cursorItem.classList.remove("active");
-        that.moveCursor(null);
-        count = 0;
-        if (cursorSpanWrap instanceof HTMLElement) {
-          cursorSpanWrap.style.display = "none";
-        }
-        if (cursorTitle) {
-          cursorTitle.textContent = "Cursor";
-        }
-      }
+    function startCursorChange(e: any, rendered: boolean) {
+      const initialMouse = {
+        mouseX: rendered ? e.clientX : 1200,
+        mouseY: rendered ? e.clientY : 700,
+      };
 
-      cursorSpan?.forEach((item, index) => {
-        if (index + 1 == count) {
-          item.classList.add("active");
+      const widgetBtnOpen = that.options.shadowDom?.shadowRoot?.querySelector(
+        ".corpoWid_button_-_start"
+      ) as HTMLElement;
+      cursorItem?.classList.add("active");
+
+      if (rendered) {
+        if (count < 1) {
+          count++;
+          cursorBlack?.classList.add("active");
+          if (cursorSpanWrap instanceof HTMLElement) {
+            cursorSpanWrap.style.display = "flex";
+          }
+          that.moveCursor(cursorBlack, initialMouse);
+          if (cursorTitle) {
+            cursorTitle.textContent = dictionary["cursorBlack"][getLang];
+
+            localStorage.setItem("corpoWid-cursor-type", count.toString());
+          }
+        } else if (count < 2) {
+          count++;
+          cursorWhite?.classList.add("active");
+          cursorBlack?.classList.remove("active");
+          that.moveCursor(cursorWhite, initialMouse);
+          if (cursorTitle) {
+            cursorTitle.textContent = dictionary["cursorWhite"][getLang];
+            localStorage.setItem("corpoWid-cursor-type", count.toString());
+          }
         } else {
-          if (count === 0) {
-            item.classList.remove("active");
+          cursorBlack?.classList.remove("active");
+          cursorWhite?.classList.remove("active");
+          cursorItem?.classList.remove("active");
+          that.moveCursor(null, initialMouse);
+          widgetBtnOpen.style.cursor = "pointer";
+
+          if (widgetBtnOpen) {
+            const imgElement = widgetBtnOpen.querySelector("img");
+            if (imgElement) {
+              imgElement.style.cursor = "pointer";
+            }
+          }
+
+          count = 0;
+          if (cursorSpanWrap instanceof HTMLElement) {
+            cursorSpanWrap.style.display = "none";
+          }
+          if (cursorTitle) {
+            localStorage.setItem("corpoWid-cursor-type", count.toString());
+            cursorTitle.textContent = dictionary["cursor"][getLang];
           }
         }
-      });
-    });
+
+        cursorSpan?.forEach((item, index) => {
+          if (index + 1 == count) {
+            item.classList.add("active");
+          } else {
+            if (count === 0) {
+              item.classList.remove("active");
+            }
+          }
+        });
+      } else {
+        console.log(count);
+
+        if (count === 1) {
+          cursorBlack?.classList.add("active");
+          if (cursorSpanWrap instanceof HTMLElement) {
+            cursorSpanWrap.style.display = "flex";
+          }
+          that.moveCursor(cursorBlack, initialMouse);
+          if (cursorTitle) {
+            cursorTitle.textContent = dictionary["cursorBlack"][getLang];
+
+            localStorage.setItem("corpoWid-cursor-type", count.toString());
+          }
+        } else if (count === 2) {
+          cursorWhite?.classList.add("active");
+          cursorBlack?.classList.remove("active");
+          that.moveCursor(cursorWhite, initialMouse);
+          if (cursorSpanWrap instanceof HTMLElement) {
+            cursorSpanWrap.style.display = "flex";
+          }
+          if (cursorTitle) {
+            cursorTitle.textContent = dictionary["cursorWhite"][getLang];
+            localStorage.setItem("corpoWid-cursor-type", count.toString());
+          }
+        } else {
+          cursorBlack?.classList.remove("active");
+          cursorWhite?.classList.remove("active");
+          cursorItem?.classList.remove("active");
+          that.moveCursor(null, initialMouse);
+          widgetBtnOpen.style.cursor = "pointer";
+
+          if (widgetBtnOpen) {
+            const imgElement = widgetBtnOpen.querySelector("img");
+            if (imgElement) {
+              imgElement.style.cursor = "pointer";
+            }
+          }
+
+          if (cursorSpanWrap instanceof HTMLElement) {
+            cursorSpanWrap.style.display = "none";
+          }
+          if (cursorTitle) {
+            localStorage.setItem("corpoWid-cursor-type", count.toString());
+            cursorTitle.textContent = dictionary["cursor"][getLang];
+          }
+        }
+
+        cursorSpan?.forEach((item, index) => {
+          if (index + 1 === count) {
+            item.classList.add("active");
+          } else {
+            if (count === 0) {
+              item.classList.remove("active");
+            }
+          }
+        });
+      }
+    }
 
     return function reset() {
       cursorBlack?.classList.remove("active");
@@ -317,19 +406,41 @@ class Event {
         cursorSpanWrap.style.display = "none";
       }
 
-      that.moveCursor(null);
       count = 0;
 
       cursorSpan?.forEach((item) => {
         item.classList.remove("active");
       });
+
+      that.moveCursor(null);
     };
   }
 
-  moveCursor(elem: Element | null | undefined) {
+  moveCursor(
+    elem: Element | null | undefined,
+    initialMouse?: Record<string, number>
+  ) {
     const that = this;
 
     document.addEventListener("mousemove", mouseDragging);
+
+    let mouseX = initialMouse?.mouseX;
+    let mouseY = initialMouse?.mouseY;
+
+    if (elem instanceof HTMLElement) {
+      elem.style.left = mouseX + "px";
+      elem.style.top = mouseY + "px";
+    }
+
+    function mouseDragging(e: MouseEvent) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      if (elem instanceof HTMLElement) {
+        elem.style.left = mouseX + "px";
+        elem.style.top = mouseY + "px";
+      }
+    }
 
     that.getAllElementForRealDom("*").forEach((item) => {
       if (item instanceof HTMLElement) {
@@ -342,16 +453,6 @@ class Event {
         item.style.cursor = elem ? "none" : "auto";
       }
     });
-
-    function mouseDragging(e: MouseEvent) {
-      const mouseX = e.clientX;
-      const mouseY = e.clientY;
-
-      if (elem instanceof HTMLElement) {
-        elem.style.left = mouseX + "px";
-        elem.style.top = mouseY + "px";
-      }
-    }
   }
 
   readMask() {
@@ -594,6 +695,30 @@ class Event {
     });
   }
 
+  openLang() {
+    const openLangBtn = this.options.shadowDom?.shadowRoot?.querySelector(
+      ".wiulangSwitcher__btn"
+    );
+
+    const langWrapper = this.options.shadowDom?.shadowRoot?.querySelector(
+      ".wiulangSwitcher__drp"
+    );
+
+    const closeLangBtn = this.options.shadowDom?.shadowRoot?.querySelector(
+      ".wiulangSwitcher__drp-close"
+    );
+
+    openLangBtn?.addEventListener("click", function () {
+      langWrapper?.classList.toggle("active");
+    });
+
+    closeLangBtn?.addEventListener("click", function () {
+      langWrapper?.classList.remove("active");
+    });
+
+    return function reset() {};
+  }
+
   resetAllParameters(reset: EventOptions["reset"]) {
     const allUsedClasses = [
       "dark-contrast",
@@ -606,6 +731,10 @@ class Event {
 
     const resetBtn = this.options.shadowDom?.shadowRoot?.querySelector(
       ".wiuwidget__resetBtn"
+    ) as HTMLElement;
+
+    const widgetBtnOpen = this.options.shadowDom?.shadowRoot?.querySelector(
+      ".corpoWid_button_-_start"
     ) as HTMLElement;
 
     const that = this;
@@ -622,9 +751,18 @@ class Event {
         });
       });
 
-      reset.forEach((item) => {
+      reset!.forEach((item) => {
         item();
       });
+
+      widgetBtnOpen.style.cursor = "pointer";
+
+      if (widgetBtnOpen) {
+        const imgElement = widgetBtnOpen.querySelector("img");
+        if (imgElement) {
+          imgElement.style.cursor = "pointer";
+        }
+      }
     });
   }
 }

@@ -1,8 +1,9 @@
 import { HtmlType } from "@/src/global-types/global.types";
 import MotionEvent from "@/src/js/motionEvents/motionEvents";
 import { html } from "../../html";
+import Translate from "../../translate/translate";
 
-type BodyOptions = {
+export type BodyOptions = {
   rootElement: HtmlType;
   styleCdnOptions: {
     href: string;
@@ -14,20 +15,17 @@ type BodyOptions = {
 };
 
 class Body {
-  setupBodyOptions: BodyOptions;
+  options: BodyOptions;
+  shadowDomContainer: HTMLElement;
 
-  constructor({
-    rootElement,
-    styleCdnOptions,
-    headStyleTag,
-    styleWidgetIcon,
-  }: BodyOptions) {
-    this.setupBodyOptions = {
-      rootElement,
-      styleCdnOptions,
-      headStyleTag,
-      styleWidgetIcon,
+  constructor(props: BodyOptions) {
+    const shadowDomContainer = document.createElement("div");
+
+    this.options = {
+      ...props,
     };
+
+    this.shadowDomContainer = shadowDomContainer;
 
     this.setupBody();
   }
@@ -35,20 +33,21 @@ class Body {
   setupBody() {
     const head = document.querySelector("head");
 
-    if (head) head.innerHTML += this.setupBodyOptions.headStyleTag;
+    if (head) head.innerHTML += this.options.headStyleTag;
 
     //shadow dom
-    const shadowDomContainer = document.createElement("div");
 
     document
-      .querySelector(this.setupBodyOptions.rootElement)
-      ?.appendChild(shadowDomContainer);
+      .querySelector(this.options.rootElement)
+      ?.appendChild(this.shadowDomContainer);
 
-    shadowDomContainer.className = "corpoWidShadow_r1cont-wrap";
+    this.shadowDomContainer.className = "corpoWidShadow_r1cont-wrap";
 
-    const shadowRoot = shadowDomContainer!.attachShadow({ mode: "open" });
+    const shadowRoot = this.shadowDomContainer!.attachShadow({
+      mode: "open",
+    });
 
-    this.setupBodyOptions.styleCdnOptions.forEach(({ href, tag, rel }) => {
+    this.options.styleCdnOptions.forEach(({ href, tag, rel }) => {
       const style = document.createElement("link");
       style.rel = rel;
       style.href = href;
@@ -57,24 +56,21 @@ class Body {
 
     shadowRoot.innerHTML += html;
 
-    const openWidgetbtn = shadowDomContainer.shadowRoot?.querySelector(
+    const openWidgetbtn = this.shadowDomContainer.shadowRoot?.querySelector(
       ".corpoWid_button_-_start"
     ) as HTMLDivElement;
 
-    const widgetWrap = shadowDomContainer.shadowRoot?.querySelector(
+    const widgetWrap = this.shadowDomContainer.shadowRoot?.querySelector(
       ".wiuwidgetBox"
     ) as HTMLDivElement;
 
-    for (const key in this.setupBodyOptions.styleWidgetIcon) {
+    for (const key in this.options.styleWidgetIcon) {
       const item: any = key;
 
       const checkType =
-        typeof this.setupBodyOptions.styleWidgetIcon[key] === "number"
-          ? "px"
-          : "";
+        typeof this.options.styleWidgetIcon[key] === "number" ? "px" : "";
 
-      openWidgetbtn.style[item] =
-        this.setupBodyOptions.styleWidgetIcon[key] + checkType;
+      openWidgetbtn.style[item] = this.options.styleWidgetIcon[key] + checkType;
     }
 
     openWidgetbtn.addEventListener("click", function () {
@@ -82,7 +78,11 @@ class Body {
     });
 
     new MotionEvent({
-      shadowDom: shadowDomContainer,
+      shadowDom: this.shadowDomContainer,
+    });
+
+    new Translate({
+      shadowDom: this.shadowDomContainer,
     });
   }
 }

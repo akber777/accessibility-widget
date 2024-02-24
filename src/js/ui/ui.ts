@@ -7,9 +7,9 @@ type UiSetup = {
 class Ui {
   setupOptions: UiSetup;
 
-  constructor({ styleWidgetIcon }: UiSetup) {
+  constructor(props: UiSetup) {
     this.setupOptions = {
-      styleWidgetIcon,
+      ...props,
     };
     this.setup(this.setupOptions.styleWidgetIcon);
   }
@@ -20,7 +20,7 @@ class Ui {
       rootElement: "body",
       styleCdnOptions: [
         {
-          href: `https://res.cloudinary.com/dlzoqroo0/raw/upload/v1708720488/index.626ac570_o9n0bt.css?v${
+          href: `https://res.cloudinary.com/dlzoqroo0/raw/upload/v1708796469/index.626ac570_g7rw3s.css?v${
             Math.random() * 1000
           }`,
           tag: "head",
@@ -34,7 +34,7 @@ class Ui {
           rel: "stylesheet",
         },
       ],
-      headStyleTag: `<link rel="stylesheet" href="https://res.cloudinary.com/dlzoqroo0/raw/upload/v1708720488/index.626ac570_o9n0bt.css?v${
+      headStyleTag: `<link rel="stylesheet" href="https://res.cloudinary.com/dlzoqroo0/raw/upload/v1708796469/index.626ac570_g7rw3s.css?v${
         Math.random() * 1000
       }" />`,
     });

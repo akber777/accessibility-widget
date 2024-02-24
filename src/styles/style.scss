@@ -764,6 +764,7 @@ body.no-cursor * {
   padding-right: 2rem;
   font-family: "Inter Tight" !important;
   font-weight: 500 !important;
+  cursor: pointer !important;
 }
 .wiulangSwitcher__btn::after {
   content: "";
@@ -796,6 +797,10 @@ body.no-cursor * {
   border-color: rgba(54, 54, 54, 0.1) !important;
   -ms-overflow-style: none;
   scrollbar-width: none;
+
+  &.active {
+    display: block;
+  }
 }
 .wiulangSwitcher__drp:-webkit-scrollbar {
   display: none;
