@@ -49,7 +49,7 @@ export const html: string = `
   <img class="wiupositionBtn" src="${BASE_URL}/widget-ui/v2/img/arrow-left.svg">
 </div>
 <div class="wiuwidgetBox__items">
-  <div class="wiuitem wiuitem1 contrastButton"  tabindex="0">
+  <div class="wiuitem wiuitem1 contrastButton"  tabindex="0" data-action="changeContrast">
     <div class="wiuicon">
       <img src="${BASE_URL}/widget-ui/v2/img/icon1.svg">
       <img src="${BASE_URL}/widget-ui/v2/img/icon1-active.svg">
@@ -61,7 +61,7 @@ export const html: string = `
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem2 linkSection"  tabindex="0">
+  <div class="wiuitem wiuitem2 linkSection"  tabindex="0" data-action="changeLinkSection">
     <div class="wiuicon">
       <img src="${BASE_URL}/widget-ui/v2/img/icon2.svg">
       <img src="${BASE_URL}/widget-ui/v2/img/icon2-active.svg">
@@ -73,7 +73,7 @@ export const html: string = `
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem3 largerText"  tabindex="0">
+  <div class="wiuitem wiuitem3 largerText"  tabindex="0"  data-action="largerText">
     <div class="wiuicon">
       <img src="${BASE_URL}/widget-ui/v2/img/icon3.svg">
       <img src="${BASE_URL}/widget-ui/v2/img/icon3-active.svg">
@@ -85,7 +85,7 @@ export const html: string = `
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem4 spaceBetweenText"  tabindex="0">
+  <div class="wiuitem wiuitem4 spaceBetweenText"  tabindex="0"  data-action="spaceBetweenText">
     <div class="wiuicon">
       <img src="${BASE_URL}/widget-ui/v2/img/icon4.svg">
       <img src="${BASE_URL}/widget-ui/v2/img/icon4-active.svg">
@@ -97,7 +97,7 @@ export const html: string = `
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem5 hideImg"  tabindex="0">
+  <div class="wiuitem wiuitem5 hideImg"  tabindex="0"  data-action="hideImg">
     <div class="wiuicon">
       <img src="${BASE_URL}/widget-ui/v2/img/icon5.svg">
       <img src="${BASE_URL}/widget-ui/v2/img/icon5-active.svg">
@@ -109,7 +109,7 @@ export const html: string = `
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem6 cursorItem"  tabindex="0">
+  <div class="wiuitem wiuitem6 cursorItem"  tabindex="0" data-action="changeCursorView">
     <div class="wiuicon">
       <img src="${BASE_URL}/widget-ui/v2/img/icon6.svg">
       <img src="${BASE_URL}/widget-ui/v2/img/icon6-active.svg">
@@ -120,7 +120,7 @@ export const html: string = `
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem7 readMask"  tabindex="0">
+  <div class="wiuitem wiuitem7 readMask"  tabindex="0" data-action="readMask">
     <div class="wiuicon">
       <img src="${BASE_URL}/widget-ui/v2/img/icon7.svg">
       <img src="${BASE_URL}/widget-ui/v2/img/icon7-active.svg">
@@ -132,7 +132,7 @@ export const html: string = `
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem8 lineHeight"  tabindex="0">
+  <div class="wiuitem wiuitem8 lineHeight"  tabindex="0"  data-action="lineHeight">
     <div class="wiuicon">
       <img src="${BASE_URL}/widget-ui/v2/img/icon8.svg">
       <img src="${BASE_URL}/widget-ui/v2/img/icon8-active.svg">
@@ -144,7 +144,7 @@ export const html: string = `
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem9 dyslexiaBtn"  tabindex="0">
+  <div class="wiuitem wiuitem9 dyslexiaBtn"  tabindex="0" data-action="dyslexia">
     <div class="wiuicon">
       <img src="${BASE_URL}/widget-ui/v2/img/icon9.svg">
       <img src="${BASE_URL}/widget-ui/v2/img/icon9-active.svg">
@@ -156,12 +156,36 @@ export const html: string = `
       <span></span>
     </span>
   </div>
-  <div class="wiuitem wiuitem10 monochrome"  tabindex="0">
+  <div class="wiuitem wiuitem10 monochrome"  tabindex="0" data-action="monochrome">
     <div class="wiuicon">
       <img src="${BASE_URL}/widget-ui/v2/img/icon10.svg">
       <img src="${BASE_URL}/widget-ui/v2/img/icon10-active.svg">
     </div>
     <h4 data-dictionary="monochrome">Monochrome</h4>
+    <span class="wiustepBox">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+  </div>
+  <div class="wiuitem wiuitem11 higlightTitle"  tabindex="0" data-action="highLightText">
+    <div class="wiuicon">
+      <img src="${BASE_URL}/widget-ui/v2/img/icon10.svg">
+      <img src="${BASE_URL}/widget-ui/v2/img/icon10-active.svg">
+    </div>
+    <h4 data-dictionary="highlight">Highlight Titles</h4>
+    <span class="wiustepBox">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+  </div>
+  <div class="wiuitem wiuitem11 stopAnimation"  tabindex="0"  data-action="playAnimation">
+    <div class="wiuicon">
+      <img src="${BASE_URL}/widget-ui/v2/img/icon10.svg">
+      <img src="${BASE_URL}/widget-ui/v2/img/icon10-active.svg">
+    </div>
+    <h4 data-dictionary="stopAnimation">Stop Animation</h4>
     <span class="wiustepBox">
       <span></span>
       <span></span>

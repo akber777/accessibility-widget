@@ -991,3 +991,40 @@ body.no-cursor * {
   left: auto !important;
   right: 3.5rem !important;
 }
+
+.corpoWid-flex_-_-- {
+  display: flex !important;
+}
+
+.corpoWid-none-_-- {
+  display: none !important;
+}
+
+.corpoWid-block-_-- {
+  display: block !important;
+}
+
+.corpoWid-cursor-none-_-- {
+  cursor: none !important;
+}
+
+.corpoWid-cursor-pointer-_-- {
+  cursor: pointer !important;
+}
+
+.corpoWid-cursor-auto-_-- {
+  cursor: auto !important;
+}
+
+.corpoWid-highlight-text-_-- {
+  outline: 3px dashed #2353ff !important;
+  outline-color: #2353ff !important;
+  outline-style: dashed !important;
+  outline-width: 3px;
+  outline-offset: 3px !important;
+}
+
+.corpoWid-animation-pause-_-- {
+  animation-play-state: paused;
+  transition: none;
+}

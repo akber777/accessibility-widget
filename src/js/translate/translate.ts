@@ -53,6 +53,16 @@ class Translate {
           "az") as DictionaryCountry;
         localStorage.setItem("corpoWid-lang", langKey);
 
+        that.translateOptions.shadowDom.shadowRoot
+          ?.querySelector(".wiulangSwitcher__drp")
+          ?.classList.remove("active");
+
+          that.translateOptions.shadowDom.shadowRoot
+          ?.querySelector(".wiudropdownBody")
+          ?.classList.remove("open-corpoWid-_drop");
+
+           
+
         that.getTranslateData(langKey);
       });
     });

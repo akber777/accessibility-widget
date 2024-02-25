@@ -8,15 +8,21 @@ type EventOptions = {
 
 class Event {
   options: EventOptions;
+  largerTextCount: number;
+  increaseFontLargerText: number;
 
   constructor(props: EventOptions) {
     this.options = {
       ...props,
     };
+
+    this.largerTextCount = 0;
+    this.increaseFontLargerText = 16;
+
     props.reset = [
-      this.changeContrast(),
-      this.changeLinkSection(),
-      this.largerText(),
+      this.changeContrast(false),
+      this.changeLinkSection(false),
+      this.largerText(false),
       this.spaceBetweenText(),
       this.hideImg(),
       this.changeCursorView(),
@@ -24,6 +30,9 @@ class Event {
       this.lineHeight(),
       this.dyslexia(),
       this.monochrome(),
+      this.highLightText(),
+      this.playAnimation(),
+      this.actionTab(),
       this.openSettingDropDown(),
       this.openLang(),
     ];
@@ -32,7 +41,6 @@ class Event {
     this.resizeWidget();
     this.closeWidget();
     this.openWidget();
-
     this.resetAllParameters(props.reset);
   }
 
@@ -65,18 +73,24 @@ class Event {
     return elementsArray;
   }
 
-  changeContrast() {
+  changeContrast(fromTab: boolean) {
+    const that = this;
     const contrastButton =
       this.options.shadowDom?.shadowRoot?.querySelector(".contrastButton");
 
-    const that = this;
-
-    contrastButton?.addEventListener("click", function () {
-      contrastButton.classList.toggle("active");
+    if (fromTab) {
+      contrastButton?.classList.toggle("active");
       that.getAllElementForRealDom("*").forEach((item) => {
         item.classList.toggle("dark-contrast");
       });
-    });
+    } else {
+      contrastButton?.addEventListener("click", function () {
+        contrastButton.classList.toggle("active");
+        that.getAllElementForRealDom("*").forEach((item) => {
+          item.classList.toggle("dark-contrast");
+        });
+      });
+    }
 
     return function reset() {
       contrastButton?.classList.remove("active");
@@ -86,18 +100,25 @@ class Event {
     };
   }
 
-  changeLinkSection() {
+  changeLinkSection(fromTab: boolean) {
     const linkSectionButton =
       this.options.shadowDom?.shadowRoot?.querySelector(".linkSection");
 
     const that = this;
 
-    linkSectionButton?.addEventListener("click", function () {
-      linkSectionButton.classList.toggle("active");
+    if (fromTab) {
+      linkSectionButton?.classList.toggle("active");
       that.getAllElementForRealDom("a").forEach((item) => {
         item.classList.toggle("highlight");
       });
-    });
+    } else {
+      linkSectionButton?.addEventListener("click", function () {
+        linkSectionButton.classList.toggle("active");
+        that.getAllElementForRealDom("a").forEach((item) => {
+          item.classList.toggle("highlight");
+        });
+      });
+    }
 
     return function reset() {
       linkSectionButton?.classList.remove("active");
@@ -107,7 +128,7 @@ class Event {
     };
   }
 
-  largerText() {
+  largerText(fromTab: boolean) {
     const largerTextButton =
       this.options.shadowDom?.shadowRoot?.querySelector(".largerText");
 
@@ -120,59 +141,64 @@ class Event {
 
     const that = this;
 
-    let count = 0;
+    if (fromTab) {
+      larger();
+    } else {
+      largerTextButton?.addEventListener("click", larger);
+    }
 
-    let increaseFont = 16;
+    function larger() {
+      console.log(that.largerTextCount);
 
-    largerTextButton?.addEventListener("click", function (e) {
       largeTextSpan?.forEach((item, index) => {
-        if (index == count) {
+        if (index == that.largerTextCount) {
           item.classList.add("active");
         } else {
-          if (count === 0) {
+          if (that.largerTextCount === 0) {
             item.classList.remove("active");
           }
         }
       });
 
-      if (count < 3) {
-        largerTextButton.classList.add("active");
+      if (that.largerTextCount < 3) {
+        largerTextButton?.classList.add("active");
         if (largeTextWrapSpan instanceof HTMLElement) {
-          largeTextWrapSpan.style.display = "flex";
+          largeTextWrapSpan.classList.add("corpoWid-flex_-_--");
         }
 
-        count++;
-        increaseFont += 2;
+        that.largerTextCount++;
+
+        that.increaseFontLargerText += 2;
       } else {
-        count = 0;
-        increaseFont = 16;
-        largerTextButton.classList.remove("active");
+        that.largerTextCount = 0;
+        that.increaseFontLargerText = 16;
+        largerTextButton?.classList.remove("active");
         largeTextWrapSpan?.classList.remove("active");
         if (largeTextWrapSpan instanceof HTMLElement) {
-          largeTextWrapSpan.style.display = "none";
+          largeTextWrapSpan.classList.remove("corpoWid-flex_-_--");
         }
       }
 
       that.getAllElementForRealDom("*").forEach((item) => {
         if (item instanceof HTMLElement) {
-          if (increaseFont === 16) {
+          if (that.increaseFontLargerText === 16) {
             item.style.fontSize = "";
 
             return;
           }
           item.style.transition = "none";
-          item.style.fontSize = increaseFont + "px";
+          item.style.fontSize = that.increaseFontLargerText + "px";
         }
       });
-    });
+    }
 
     return function reset() {
-      count = 0;
-      increaseFont = 16;
+      that.largerTextCount = 0;
+      that.increaseFontLargerText = 16;
       largerTextButton?.classList.remove("active");
       largeTextWrapSpan?.classList.remove("active");
       if (largeTextWrapSpan instanceof HTMLElement) {
-        largeTextWrapSpan.style.display = "none";
+        largeTextWrapSpan.classList.add("corpoWid-none-_--");
       }
     };
   }
@@ -201,40 +227,23 @@ class Event {
 
     const that = this;
 
-    let clicked = false;
-
     hideImg?.addEventListener("click", function () {
-      if (clicked) {
-        clicked = false;
-      } else {
-        clicked = true;
-      }
-
       hideImg.classList.toggle("active");
       that.getAllElementForRealDom("img").forEach((item) => {
         if (item instanceof HTMLElement) {
-          if (clicked) {
-            item.style.display = "none";
-          } else {
-            item.style.display = "";
-          }
+          item.classList.toggle("corpoWid-none-_--");
         }
       });
 
       that.getAllElementForRealDom("*", "img").forEach((item) => {
         if (item instanceof HTMLElement) {
-          if (clicked) {
-            item.classList.add("removeBcg");
-          } else {
-            item.classList.remove("removeBcg");
-          }
+          item.classList.toggle("removeBcg");
         }
       });
     });
 
     return function reset() {
       hideImg?.classList.remove("active");
-      clicked = false;
     };
   }
 
@@ -271,6 +280,32 @@ class Event {
 
     startCursorChange(null, false);
 
+    function removeCursor(show: boolean) {
+      function getItems(item: HTMLElement) {
+        if (show) {
+          item.classList.remove(`corpoWid-cursor-none-_--`);
+          item.classList.add(`corpoWid-cursor-auto-_--`);
+        } else {
+          item.classList.add(`corpoWid-cursor-none-_--`);
+          item.classList.remove(`corpoWid-cursor-auto-_--`);
+        }
+      }
+
+      that.getAllElementForRealDom("*").forEach((item) => {
+        if (item instanceof HTMLElement) {
+          getItems(item);
+        }
+      });
+
+      that
+        .getAllElementForShadowDom("*", ".corpoWid_button_-_start > img")
+        .forEach((item) => {
+          if (item instanceof HTMLElement) {
+            getItems(item);
+          }
+        });
+    }
+
     function startCursorChange(e: any, rendered: boolean) {
       const initialMouse = {
         mouseX: rendered ? e.clientX : 1200,
@@ -287,7 +322,7 @@ class Event {
           count++;
           cursorBlack?.classList.add("active");
           if (cursorSpanWrap instanceof HTMLElement) {
-            cursorSpanWrap.style.display = "flex";
+            cursorSpanWrap.classList.add("corpoWid-flex_-_--");
           }
           that.moveCursor(cursorBlack, initialMouse);
           if (cursorTitle) {
@@ -295,6 +330,8 @@ class Event {
 
             localStorage.setItem("corpoWid-cursor-type", count.toString());
           }
+
+          removeCursor(false);
         } else if (count < 2) {
           count++;
           cursorWhite?.classList.add("active");
@@ -304,28 +341,30 @@ class Event {
             cursorTitle.textContent = dictionary["cursorWhite"][getLang];
             localStorage.setItem("corpoWid-cursor-type", count.toString());
           }
+          removeCursor(false);
         } else {
+          count = 0;
           cursorBlack?.classList.remove("active");
           cursorWhite?.classList.remove("active");
           cursorItem?.classList.remove("active");
           that.moveCursor(null, initialMouse);
-          widgetBtnOpen.style.cursor = "pointer";
+          widgetBtnOpen.classList.add("corpoWid-cursor-pointer-_--");
 
           if (widgetBtnOpen) {
             const imgElement = widgetBtnOpen.querySelector("img");
             if (imgElement) {
-              imgElement.style.cursor = "pointer";
+              imgElement.classList.add("corpoWid-cursor-pointer-_--");
             }
           }
 
-          count = 0;
           if (cursorSpanWrap instanceof HTMLElement) {
-            cursorSpanWrap.style.display = "none";
+            cursorSpanWrap.classList.remove("corpoWid-flex_-_--");
           }
           if (cursorTitle) {
             localStorage.setItem("corpoWid-cursor-type", count.toString());
             cursorTitle.textContent = dictionary["cursor"][getLang];
           }
+          removeCursor(true);
         }
 
         cursorSpan?.forEach((item, index) => {
@@ -338,12 +377,10 @@ class Event {
           }
         });
       } else {
-        console.log(count);
-
         if (count === 1) {
           cursorBlack?.classList.add("active");
           if (cursorSpanWrap instanceof HTMLElement) {
-            cursorSpanWrap.style.display = "flex";
+            cursorSpanWrap.classList.add("corpoWid-flex_-_--");
           }
           that.moveCursor(cursorBlack, initialMouse);
           if (cursorTitle) {
@@ -351,38 +388,41 @@ class Event {
 
             localStorage.setItem("corpoWid-cursor-type", count.toString());
           }
+          removeCursor(false);
         } else if (count === 2) {
           cursorWhite?.classList.add("active");
           cursorBlack?.classList.remove("active");
           that.moveCursor(cursorWhite, initialMouse);
           if (cursorSpanWrap instanceof HTMLElement) {
-            cursorSpanWrap.style.display = "flex";
+            cursorSpanWrap.classList.add("corpoWid-flex_-_--");
           }
           if (cursorTitle) {
             cursorTitle.textContent = dictionary["cursorWhite"][getLang];
             localStorage.setItem("corpoWid-cursor-type", count.toString());
           }
+          removeCursor(false);
         } else {
           cursorBlack?.classList.remove("active");
           cursorWhite?.classList.remove("active");
           cursorItem?.classList.remove("active");
           that.moveCursor(null, initialMouse);
-          widgetBtnOpen.style.cursor = "pointer";
+          widgetBtnOpen.classList.add("corpoWid-cursor-pointer-_--");
 
           if (widgetBtnOpen) {
             const imgElement = widgetBtnOpen.querySelector("img");
             if (imgElement) {
-              imgElement.style.cursor = "pointer";
+              imgElement.classList.add("corpoWid-cursor-pointer-_--");
             }
           }
 
           if (cursorSpanWrap instanceof HTMLElement) {
-            cursorSpanWrap.style.display = "none";
+            cursorSpanWrap.classList.remove("corpoWid-flex_-_--");
           }
           if (cursorTitle) {
             localStorage.setItem("corpoWid-cursor-type", count.toString());
             cursorTitle.textContent = dictionary["cursor"][getLang];
           }
+          removeCursor(true);
         }
 
         cursorSpan?.forEach((item, index) => {
@@ -403,7 +443,7 @@ class Event {
       cursorItem?.classList.remove("active");
       if (cursorTitle) cursorTitle.textContent = "Cursor";
       if (cursorSpanWrap instanceof HTMLElement) {
-        cursorSpanWrap.style.display = "none";
+        cursorSpanWrap.classList.add("corpoWid-none-_--");
       }
 
       count = 0;
@@ -441,18 +481,6 @@ class Event {
         elem.style.top = mouseY + "px";
       }
     }
-
-    that.getAllElementForRealDom("*").forEach((item) => {
-      if (item instanceof HTMLElement) {
-        item.style.cursor = elem ? "none" : "auto";
-      }
-    });
-
-    that.getAllElementForShadowDom("*").forEach((item) => {
-      if (item instanceof HTMLElement) {
-        item.style.cursor = elem ? "none" : "auto";
-      }
-    });
   }
 
   readMask() {
@@ -464,21 +492,10 @@ class Event {
     const readMaskWrapper =
       this.options.shadowDom?.shadowRoot?.getElementById("wiureadingMask");
 
-    let click = false;
-
     readMaskButton?.addEventListener("click", function () {
       readMaskButton.classList.toggle("active");
       readMaskWrapper?.classList.toggle("active");
-
-      if (readMaskWrapper) {
-        if (!click) {
-          readMaskWrapper.style.display = "block";
-          click = true;
-        } else {
-          readMaskWrapper.style.display = "none";
-          click = false;
-        }
-      }
+      readMaskWrapper?.classList.toggle("corpoWid-block-_--");
     });
 
     function mouseDragging(e: MouseEvent) {
@@ -490,10 +507,9 @@ class Event {
     }
 
     return function reset() {
-      click = false;
       readMaskButton?.classList.remove("active");
       readMaskWrapper?.classList.remove("active");
-      if (readMaskWrapper) readMaskWrapper.style.display = "none";
+      if (readMaskWrapper) readMaskWrapper.classList.add("corpoWid-none-_--");
     };
   }
 
@@ -529,7 +545,7 @@ class Event {
 
       if (count < 3) {
         if (lineTextWrapSpan instanceof HTMLElement) {
-          lineTextWrapSpan.style.display = "flex";
+          lineTextWrapSpan.classList.add("corpoWid-flex_-_--");
         }
         lineHeight.classList.add("active");
 
@@ -542,7 +558,7 @@ class Event {
         lineTextWrapSpan?.classList.remove("active");
 
         if (lineTextWrapSpan instanceof HTMLElement) {
-          lineTextWrapSpan.style.display = "none";
+          lineTextWrapSpan.classList.add("corpoWid-none-_--");
         }
       }
 
@@ -554,7 +570,7 @@ class Event {
             return;
           }
 
-          item.style.transition = "none";
+          // item.style.transition = "none";
 
           item.style.lineHeight = lineHeightVal + "px";
         }
@@ -567,7 +583,7 @@ class Event {
       lineHeight?.classList.remove("active");
 
       if (lineTextWrapSpan instanceof HTMLElement) {
-        lineTextWrapSpan.style.display = "none";
+        lineTextWrapSpan.classList.add("corpoWid-none-_--");
       }
       lineTextWrapSpan?.classList.remove("active");
     };
@@ -685,13 +701,11 @@ class Event {
     const widgetWrapper =
       this.options.shadowDom?.shadowRoot?.querySelector(".wiuwidgetBox");
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const widgetCloseButtonWrapper = document.querySelector(
-        ".corpoWid_button_-_start"
-      );
-      widgetCloseButtonWrapper?.addEventListener("click", function () {
-        widgetWrapper?.classList.toggle("active");
-      });
+    const widgetCloseButtonWrapper = document.querySelector(
+      ".corpoWid_button_-_start"
+    );
+    widgetCloseButtonWrapper?.addEventListener("click", function () {
+      widgetWrapper?.classList.toggle("active");
     });
   }
 
@@ -719,6 +733,70 @@ class Event {
     return function reset() {};
   }
 
+  highLightText() {
+    const h = ["H1", "H2", "H3", "H4", "H5", "H6"];
+
+    const highLightBtn =
+      this.options.shadowDom?.shadowRoot?.querySelector(".higlightTitle");
+
+    const that = this;
+
+    highLightBtn?.addEventListener("click", function () {
+      highLightBtn.classList.toggle("active");
+
+      that.getAllElementForRealDom("*").forEach((item) => {
+        if (h.includes(item.tagName)) {
+          item.classList.toggle("corpoWid-highlight-text-_--");
+        }
+      });
+    });
+
+    return function reset() {
+      highLightBtn?.classList.remove("active");
+    };
+  }
+
+  playAnimation() {
+    const animationBtn =
+      this.options.shadowDom?.shadowRoot?.querySelector(".stopAnimation");
+
+    const that = this;
+
+    animationBtn?.addEventListener("click", function () {
+      animationBtn.classList.toggle("active");
+      that.getAllElementForRealDom("*").forEach((item) => {
+        item.classList.toggle("corpoWid-animation-pause-_--");
+      });
+    });
+
+    return function reset() {
+      animationBtn?.classList.remove("active");
+      that.getAllElementForRealDom("*").forEach((item) => {
+        item.classList.remove("corpoWid-animation-pause-_--");
+      });
+    };
+  }
+
+  actionTab() {
+    const allItems =
+      this.options.shadowDom?.shadowRoot?.querySelectorAll(".wiuitem");
+
+    const that = this;
+
+    allItems?.forEach((item) => {
+      item.addEventListener("keyup", function (e) {
+        if ((e as KeyboardEvent).key === "Enter") {
+          const getAttr = item.getAttribute("data-action");
+
+          //@ts-ignore
+          if (getAttr) that[getAttr](true);
+        }
+      });
+    });
+
+    return function reset() {};
+  }
+
   resetAllParameters(reset: EventOptions["reset"]) {
     const allUsedClasses = [
       "dark-contrast",
@@ -727,6 +805,14 @@ class Event {
       "font-od",
       "filter",
       "highlight",
+      "corpoWid-flex_-_--",
+      "corpoWid-none-_--",
+      "corpoWid-block-_--",
+      "corpoWid-cursor-none-_--",
+      "corpoWid-cursor-none-_--",
+      "corpoWid-cursor-pointer-_--",
+      "corpoWid-cursor-auto-_--",
+      "corpoWid-highlight-text-_--",
     ];
 
     const resetBtn = this.options.shadowDom?.shadowRoot?.querySelector(
@@ -746,7 +832,8 @@ class Event {
           item.classList.remove(e);
 
           if (item instanceof HTMLElement) {
-            item.style.cssText = "";
+            item.style.fontSize = "";
+            item.style.lineHeight = "";
           }
         });
       });
@@ -755,12 +842,12 @@ class Event {
         item();
       });
 
-      widgetBtnOpen.style.cursor = "pointer";
+      widgetBtnOpen.classList.add("corpoWid-cursor-pointer-_--");
 
       if (widgetBtnOpen) {
         const imgElement = widgetBtnOpen.querySelector("img");
         if (imgElement) {
-          imgElement.style.cursor = "pointer";
+          imgElement.classList.add("corpoWid-cursor-pointer-_--");
         }
       }
     });

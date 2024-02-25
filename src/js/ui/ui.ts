@@ -1,7 +1,7 @@
 import Body from "@/src/js/ui/body/body";
 
 type UiSetup = {
-  styleWidgetIcon: Record<string, string | number>;
+  styleWidgetIcon: Record<string, string>;
 };
 
 class Ui {
@@ -20,9 +20,7 @@ class Ui {
       rootElement: "body",
       styleCdnOptions: [
         {
-          href: `https://res.cloudinary.com/dlzoqroo0/raw/upload/v1708796469/index.626ac570_g7rw3s.css?v${
-            Math.random() * 1000
-          }`,
+          href: `./index.626ac570.css?v${Math.random() * 1000}`,
           tag: "head",
           rel: "stylesheet",
         },
@@ -34,7 +32,7 @@ class Ui {
           rel: "stylesheet",
         },
       ],
-      headStyleTag: `<link rel="stylesheet" href="https://res.cloudinary.com/dlzoqroo0/raw/upload/v1708796469/index.626ac570_g7rw3s.css?v${
+      headStyleTag: `<link rel="stylesheet" href="https://res.cloudinary.com/dlzoqroo0/raw/upload/v1708818422/index.626ac570_wutt2m.css?v${
         Math.random() * 1000
       }" />`,
     });

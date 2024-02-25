@@ -10,7 +10,7 @@ export type BodyOptions = {
     tag: HtmlType;
     rel: string;
   }[];
-  styleWidgetIcon: Record<string, string | number>;
+  styleWidgetIcon: Record<string, string>;
   headStyleTag: string;
 };
 
@@ -66,11 +66,7 @@ class Body {
 
     for (const key in this.options.styleWidgetIcon) {
       const item: any = key;
-
-      const checkType =
-        typeof this.options.styleWidgetIcon[key] === "number" ? "px" : "";
-
-      openWidgetbtn.style[item] = this.options.styleWidgetIcon[key] + checkType;
+      openWidgetbtn.style[item] = this.options.styleWidgetIcon[key];
     }
 
     openWidgetbtn.addEventListener("click", function () {
