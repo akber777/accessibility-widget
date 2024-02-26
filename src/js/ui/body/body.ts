@@ -12,6 +12,7 @@ export type BodyOptions = {
   }[];
   styleWidgetIcon: Record<string, string>;
   headStyleTag: string;
+  translation: boolean;
 };
 
 class Body {
@@ -75,6 +76,7 @@ class Body {
 
     new MotionEvent({
       shadowDom: this.shadowDomContainer,
+      translation: this.options.translation,
     });
 
     new Translate({

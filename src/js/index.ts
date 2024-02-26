@@ -8,16 +8,19 @@ declare global {
 
 type CorpoWidOptions = {
   id: string;
-  styleWidgetIcon: Record<string, string | number>;
+  styleWidgetIcon: Record<string, string>;
+  translation: boolean;
 };
 
-function CorpoWid({ id, styleWidgetIcon }: CorpoWidOptions) {
+function CorpoWid({ id, styleWidgetIcon, translation }: CorpoWidOptions) {
   const self = {
     start: function () {
       new Ui({
         styleWidgetIcon,
+        translation,
       });
     },
+    translation,
   };
 
   return self;

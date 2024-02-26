@@ -52,16 +52,16 @@ class Translate {
         const langKey = (item.getAttribute("data-lang") ||
           "az") as DictionaryCountry;
         localStorage.setItem("corpoWid-lang", langKey);
+        langs.forEach((_item) => _item.classList.remove("active"));
+        item.classList.add("active");
 
         that.translateOptions.shadowDom.shadowRoot
           ?.querySelector(".wiulangSwitcher__drp")
           ?.classList.remove("active");
 
-          that.translateOptions.shadowDom.shadowRoot
+        that.translateOptions.shadowDom.shadowRoot
           ?.querySelector(".wiudropdownBody")
           ?.classList.remove("open-corpoWid-_drop");
-
-           
 
         that.getTranslateData(langKey);
       });

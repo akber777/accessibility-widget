@@ -151,3 +151,9 @@ export type DictionaryCountry =
   | "uz";
 
 export type IDictionary = Record<string, Record<DictionaryCountry, string>>;
+
+export interface ITranslate {
+  siteLang: string;
+  translateLang: string;
+  content: string;
+}

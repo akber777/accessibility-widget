@@ -1,15 +1,21 @@
 import { DictionaryCountry } from "@/src/global-types/global.types";
 import { dictionary } from "../dictionary/dictionary";
+import Service from "../service";
 
 type EventOptions = {
   shadowDom: Element | null;
   reset?: Array<() => void>;
+  translation: boolean;
 };
 
 class Event {
-  options: EventOptions;
-  largerTextCount: number;
-  increaseFontLargerText: number;
+  private options: EventOptions;
+  private largerTextCount: number;
+  private increaseFontLargerText: number;
+  private cursorCount: number;
+  private lineHeightCount: number;
+  private lineHeightVal: number;
+  private activateTranslate: boolean;
 
   constructor(props: EventOptions) {
     this.options = {
@@ -18,20 +24,26 @@ class Event {
 
     this.largerTextCount = 0;
     this.increaseFontLargerText = 16;
+    this.cursorCount =
+      Number(localStorage.getItem("corpoWid-cursor-type")) || 0;
+    this.lineHeightCount = 0;
+    this.lineHeightVal = 20;
+    this.activateTranslate = false;
 
     props.reset = [
       this.changeContrast(false),
       this.changeLinkSection(false),
       this.largerText(false),
-      this.spaceBetweenText(),
-      this.hideImg(),
-      this.changeCursorView(),
-      this.readMask(),
-      this.lineHeight(),
-      this.dyslexia(),
-      this.monochrome(),
-      this.highLightText(),
-      this.playAnimation(),
+      this.spaceBetweenText(false),
+      this.hideImg(false),
+      this.changeCursorView(false),
+      this.readMask(false),
+      this.lineHeight(false),
+      this.dyslexia(false),
+      this.monochrome(false),
+      this.highLightText(false),
+      this.playAnimation(false),
+      this.translateSpecificArea(false),
       this.actionTab(),
       this.openSettingDropDown(),
       this.openLang(),
@@ -148,8 +160,6 @@ class Event {
     }
 
     function larger() {
-      console.log(that.largerTextCount);
-
       largeTextSpan?.forEach((item, index) => {
         if (index == that.largerTextCount) {
           item.classList.add("active");
@@ -203,32 +213,39 @@ class Event {
     };
   }
 
-  spaceBetweenText() {
+  spaceBetweenText(fromTab: boolean) {
     const spaceBetweenText =
       this.options.shadowDom?.shadowRoot?.querySelector(".spaceBetweenText");
 
     const that = this;
 
-    spaceBetweenText?.addEventListener("click", function () {
-      spaceBetweenText.classList.toggle("active");
+    if (fromTab) {
+      spaceBetweenText?.classList.toggle("active");
       that.getAllElementForRealDom("*").forEach((item) => {
         item.classList.toggle("sm-space");
       });
-    });
+    } else {
+      spaceBetweenText?.addEventListener("click", function () {
+        spaceBetweenText.classList.toggle("active");
+        that.getAllElementForRealDom("*").forEach((item) => {
+          item.classList.toggle("sm-space");
+        });
+      });
+    }
 
     return function reset() {
       spaceBetweenText?.classList.remove("active");
     };
   }
 
-  hideImg() {
+  hideImg(fromTab: boolean) {
     const hideImg =
       this.options.shadowDom?.shadowRoot?.querySelector(".hideImg");
 
     const that = this;
 
-    hideImg?.addEventListener("click", function () {
-      hideImg.classList.toggle("active");
+    if (fromTab) {
+      hideImg?.classList.toggle("active");
       that.getAllElementForRealDom("img").forEach((item) => {
         if (item instanceof HTMLElement) {
           item.classList.toggle("corpoWid-none-_--");
@@ -240,14 +257,29 @@ class Event {
           item.classList.toggle("removeBcg");
         }
       });
-    });
+    } else {
+      hideImg?.addEventListener("click", function () {
+        hideImg.classList.toggle("active");
+        that.getAllElementForRealDom("img").forEach((item) => {
+          if (item instanceof HTMLElement) {
+            item.classList.toggle("corpoWid-none-_--");
+          }
+        });
+
+        that.getAllElementForRealDom("*", "img").forEach((item) => {
+          if (item instanceof HTMLElement) {
+            item.classList.toggle("removeBcg");
+          }
+        });
+      });
+    }
 
     return function reset() {
       hideImg?.classList.remove("active");
     };
   }
 
-  changeCursorView() {
+  changeCursorView(fromTab: boolean) {
     const cursorItem =
       this.options.shadowDom?.shadowRoot?.querySelector(".cursorItem");
 
@@ -270,15 +302,25 @@ class Event {
     const getLang = (localStorage.getItem("corpoWid-lang") ||
       "az") as DictionaryCountry;
 
-    let count = Number(localStorage.getItem("corpoWid-cursor-type")) || 0;
-
     const that = this;
 
-    cursorItem?.addEventListener("click", (e) =>
-      startCursorChange.call(null, e, true)
-    );
+    if (fromTab) {
+      startCursorChange(
+        {
+          mouseX: 1200,
+          mouseY: 400,
+        },
+        true
+      );
+    } else {
+      cursorItem?.addEventListener("click", (e) =>
+        startCursorChange.call(null, e, true)
+      );
+    }
 
-    startCursorChange(null, false);
+    if (localStorage.getItem("corpoWid-cursor-type")) {
+      startCursorChange(null, false);
+    }
 
     function removeCursor(show: boolean) {
       function getItems(item: HTMLElement) {
@@ -309,7 +351,7 @@ class Event {
     function startCursorChange(e: any, rendered: boolean) {
       const initialMouse = {
         mouseX: rendered ? e.clientX : 1200,
-        mouseY: rendered ? e.clientY : 700,
+        mouseY: rendered ? e.clientY : 400,
       };
 
       const widgetBtnOpen = that.options.shadowDom?.shadowRoot?.querySelector(
@@ -318,8 +360,8 @@ class Event {
       cursorItem?.classList.add("active");
 
       if (rendered) {
-        if (count < 1) {
-          count++;
+        if (that.cursorCount < 1) {
+          that.cursorCount++;
           cursorBlack?.classList.add("active");
           if (cursorSpanWrap instanceof HTMLElement) {
             cursorSpanWrap.classList.add("corpoWid-flex_-_--");
@@ -328,22 +370,28 @@ class Event {
           if (cursorTitle) {
             cursorTitle.textContent = dictionary["cursorBlack"][getLang];
 
-            localStorage.setItem("corpoWid-cursor-type", count.toString());
+            localStorage.setItem(
+              "corpoWid-cursor-type",
+              that.cursorCount.toString()
+            );
           }
 
           removeCursor(false);
-        } else if (count < 2) {
-          count++;
+        } else if (that.cursorCount < 2) {
+          that.cursorCount++;
           cursorWhite?.classList.add("active");
           cursorBlack?.classList.remove("active");
           that.moveCursor(cursorWhite, initialMouse);
           if (cursorTitle) {
             cursorTitle.textContent = dictionary["cursorWhite"][getLang];
-            localStorage.setItem("corpoWid-cursor-type", count.toString());
+            localStorage.setItem(
+              "corpoWid-cursor-type",
+              that.cursorCount.toString()
+            );
           }
           removeCursor(false);
         } else {
-          count = 0;
+          that.cursorCount = 0;
           cursorBlack?.classList.remove("active");
           cursorWhite?.classList.remove("active");
           cursorItem?.classList.remove("active");
@@ -361,23 +409,26 @@ class Event {
             cursorSpanWrap.classList.remove("corpoWid-flex_-_--");
           }
           if (cursorTitle) {
-            localStorage.setItem("corpoWid-cursor-type", count.toString());
+            localStorage.setItem(
+              "corpoWid-cursor-type",
+              that.cursorCount.toString()
+            );
             cursorTitle.textContent = dictionary["cursor"][getLang];
           }
           removeCursor(true);
         }
 
         cursorSpan?.forEach((item, index) => {
-          if (index + 1 == count) {
+          if (index + 1 == that.cursorCount) {
             item.classList.add("active");
           } else {
-            if (count === 0) {
+            if (that.cursorCount === 0) {
               item.classList.remove("active");
             }
           }
         });
       } else {
-        if (count === 1) {
+        if (that.cursorCount === 1) {
           cursorBlack?.classList.add("active");
           if (cursorSpanWrap instanceof HTMLElement) {
             cursorSpanWrap.classList.add("corpoWid-flex_-_--");
@@ -386,10 +437,13 @@ class Event {
           if (cursorTitle) {
             cursorTitle.textContent = dictionary["cursorBlack"][getLang];
 
-            localStorage.setItem("corpoWid-cursor-type", count.toString());
+            localStorage.setItem(
+              "corpoWid-cursor-type",
+              that.cursorCount.toString()
+            );
           }
           removeCursor(false);
-        } else if (count === 2) {
+        } else if (that.cursorCount === 2) {
           cursorWhite?.classList.add("active");
           cursorBlack?.classList.remove("active");
           that.moveCursor(cursorWhite, initialMouse);
@@ -398,7 +452,10 @@ class Event {
           }
           if (cursorTitle) {
             cursorTitle.textContent = dictionary["cursorWhite"][getLang];
-            localStorage.setItem("corpoWid-cursor-type", count.toString());
+            localStorage.setItem(
+              "corpoWid-cursor-type",
+              that.cursorCount.toString()
+            );
           }
           removeCursor(false);
         } else {
@@ -419,17 +476,20 @@ class Event {
             cursorSpanWrap.classList.remove("corpoWid-flex_-_--");
           }
           if (cursorTitle) {
-            localStorage.setItem("corpoWid-cursor-type", count.toString());
+            localStorage.setItem(
+              "corpoWid-cursor-type",
+              that.cursorCount.toString()
+            );
             cursorTitle.textContent = dictionary["cursor"][getLang];
           }
           removeCursor(true);
         }
 
         cursorSpan?.forEach((item, index) => {
-          if (index + 1 === count) {
+          if (index + 1 === that.cursorCount) {
             item.classList.add("active");
           } else {
-            if (count === 0) {
+            if (that.cursorCount === 0) {
               item.classList.remove("active");
             }
           }
@@ -446,7 +506,7 @@ class Event {
         cursorSpanWrap.classList.add("corpoWid-none-_--");
       }
 
-      count = 0;
+      that.cursorCount = 0;
 
       cursorSpan?.forEach((item) => {
         item.classList.remove("active");
@@ -483,20 +543,24 @@ class Event {
     }
   }
 
-  readMask() {
-    document.addEventListener("mousemove", mouseDragging);
-
+  readMask(fromTab: boolean) {
     const readMaskButton =
       this.options.shadowDom?.shadowRoot?.querySelector(".readMask");
 
     const readMaskWrapper =
       this.options.shadowDom?.shadowRoot?.getElementById("wiureadingMask");
 
-    readMaskButton?.addEventListener("click", function () {
-      readMaskButton.classList.toggle("active");
+    if (fromTab) {
+      readMaskButton?.classList.toggle("active");
       readMaskWrapper?.classList.toggle("active");
       readMaskWrapper?.classList.toggle("corpoWid-block-_--");
-    });
+    } else {
+      readMaskButton?.addEventListener("click", function () {
+        readMaskButton.classList.toggle("active");
+        readMaskWrapper?.classList.toggle("active");
+        readMaskWrapper?.classList.toggle("corpoWid-block-_--");
+      });
+    }
 
     function mouseDragging(e: MouseEvent) {
       const mouseY = e.clientY;
@@ -506,14 +570,17 @@ class Event {
       }
     }
 
+    document.addEventListener("mousemove", mouseDragging);
+
     return function reset() {
       readMaskButton?.classList.remove("active");
       readMaskWrapper?.classList.remove("active");
-      if (readMaskWrapper) readMaskWrapper.classList.add("corpoWid-none-_--");
+      if (readMaskWrapper)
+        readMaskWrapper.classList.remove("corpoWid-block-_--");
     };
   }
 
-  lineHeight() {
+  lineHeight(fromTab: boolean) {
     const lineHeight =
       this.options.shadowDom?.shadowRoot?.querySelector(".lineHeight");
 
@@ -526,60 +593,59 @@ class Event {
 
     const that = this;
 
-    let count = 0;
+    if (fromTab) {
+      startLineHeight();
+    } else {
+      lineHeight?.addEventListener("click", startLineHeight);
+    }
 
-    let lineHeightVal = 20;
-
-    lineHeight?.addEventListener("click", function (e) {
+    function startLineHeight() {
       lineTextSpan?.forEach((item, index) => {
-        if (index == count) {
+        if (index == that.lineHeightCount) {
           item.classList.add("active");
         } else {
-          if (count === 0) {
+          if (that.lineHeightCount === 0) {
             item.classList.remove("active");
           }
         }
       });
 
-      lineTextWrapSpan?.classList.toggle("active");
-
-      if (count < 3) {
+      if (that.lineHeightCount < 3) {
         if (lineTextWrapSpan instanceof HTMLElement) {
           lineTextWrapSpan.classList.add("corpoWid-flex_-_--");
         }
-        lineHeight.classList.add("active");
+        lineHeight?.classList.add("active");
 
-        count++;
-        lineHeightVal += 4;
+        that.lineHeightCount++;
+        that.lineHeightVal += 4;
       } else {
-        count = 0;
-        lineHeightVal = 20;
-        lineHeight.classList.remove("active");
+        that.lineHeightCount = 0;
+        that.lineHeightVal = 20;
+        lineHeight?.classList.remove("active");
         lineTextWrapSpan?.classList.remove("active");
 
         if (lineTextWrapSpan instanceof HTMLElement) {
-          lineTextWrapSpan.classList.add("corpoWid-none-_--");
+          lineTextWrapSpan.classList.remove("corpoWid-flex_-_--");
         }
       }
 
       that.getAllElementForRealDom("*").forEach((item) => {
         if (item instanceof HTMLElement) {
-          if (lineHeightVal === 20) {
+          if (that.lineHeightVal === 20) {
             item.style.lineHeight = "";
 
             return;
           }
 
-          // item.style.transition = "none";
-
-          item.style.lineHeight = lineHeightVal + "px";
+          item.style.transition = "none";
+          item.style.lineHeight = that.lineHeightVal + "px";
         }
       });
-    });
+    }
 
     return function reset() {
-      count = 0;
-      lineHeightVal = 20;
+      that.lineHeightCount = 0;
+      that.lineHeightVal = 20;
       lineHeight?.classList.remove("active");
 
       if (lineTextWrapSpan instanceof HTMLElement) {
@@ -589,36 +655,53 @@ class Event {
     };
   }
 
-  dyslexia() {
+  dyslexia(fromTab: boolean) {
     const dyslexiaButton =
       this.options.shadowDom?.shadowRoot?.querySelector(".dyslexiaBtn");
     const that = this;
 
-    dyslexiaButton?.addEventListener("click", function () {
-      dyslexiaButton.classList.toggle("active");
+    if (fromTab) {
+      dyslexiaButton?.classList.toggle("active");
 
       that.getAllElementForRealDom("*").forEach((item) => {
-        if (dyslexiaButton.classList.contains("active")) {
+        if (dyslexiaButton?.classList.contains("active")) {
           item.classList.add("font-od");
         } else {
           item.classList.remove("font-od");
         }
       });
-    });
+    } else {
+      dyslexiaButton?.addEventListener("click", function () {
+        dyslexiaButton.classList.toggle("active");
+
+        that.getAllElementForRealDom("*").forEach((item) => {
+          if (dyslexiaButton.classList.contains("active")) {
+            item.classList.add("font-od");
+          } else {
+            item.classList.remove("font-od");
+          }
+        });
+      });
+    }
 
     return function reset() {
       dyslexiaButton?.classList.remove("active");
     };
   }
 
-  monochrome() {
+  monochrome(fromTab: boolean) {
     const monochrome =
       this.options.shadowDom?.shadowRoot?.querySelector(".monochrome");
 
-    monochrome?.addEventListener("click", function () {
-      monochrome.classList.toggle("active");
+    if (fromTab) {
+      monochrome?.classList.toggle("active");
       document.querySelector("html")?.classList.toggle("filter");
-    });
+    } else {
+      monochrome?.addEventListener("click", function () {
+        monochrome.classList.toggle("active");
+        document.querySelector("html")?.classList.toggle("filter");
+      });
+    }
 
     return function reset() {
       monochrome?.classList.remove("active");
@@ -676,11 +759,25 @@ class Event {
       this.options.shadowDom?.shadowRoot?.querySelector(".wiupositionBtn");
 
     widgetBoxResizeBtn?.addEventListener("click", function () {
-      widgetWrapper?.classList.add("wN");
+      const clasList = ["animate__bounceOutRight", "animate__animated"];
+      widgetWrapper?.classList.add(...clasList);
+
+      setTimeout(() => {
+        widgetWrapper?.classList.remove("animate__bounceOutRight");
+        widgetWrapper?.classList.add("wN");
+        widgetWrapper?.classList.add("animate__bounceInRight");
+      }, 500);
     });
 
     widgetBoxResizeReverseBtn?.addEventListener("click", function () {
-      widgetWrapper?.classList.remove("wN");
+      const clasList = ["animate__bounceOutRight", "animate__animated"];
+      widgetWrapper?.classList.add(...clasList);
+
+      setTimeout(() => {
+        widgetWrapper?.classList.remove("animate__bounceOutRight");
+        widgetWrapper?.classList.remove("wN");
+        widgetWrapper?.classList.add("animate__bounceInRight");
+      }, 500);
     });
   }
 
@@ -733,7 +830,7 @@ class Event {
     return function reset() {};
   }
 
-  highLightText() {
+  highLightText(fromTab: boolean) {
     const h = ["H1", "H2", "H3", "H4", "H5", "H6"];
 
     const highLightBtn =
@@ -741,33 +838,50 @@ class Event {
 
     const that = this;
 
-    highLightBtn?.addEventListener("click", function () {
-      highLightBtn.classList.toggle("active");
+    if (fromTab) {
+      highLightBtn?.classList.toggle("active");
 
       that.getAllElementForRealDom("*").forEach((item) => {
         if (h.includes(item.tagName)) {
           item.classList.toggle("corpoWid-highlight-text-_--");
         }
       });
-    });
+    } else {
+      highLightBtn?.addEventListener("click", function () {
+        highLightBtn.classList.toggle("active");
+
+        that.getAllElementForRealDom("*").forEach((item) => {
+          if (h.includes(item.tagName)) {
+            item.classList.toggle("corpoWid-highlight-text-_--");
+          }
+        });
+      });
+    }
 
     return function reset() {
       highLightBtn?.classList.remove("active");
     };
   }
 
-  playAnimation() {
+  playAnimation(fromTab: boolean) {
     const animationBtn =
       this.options.shadowDom?.shadowRoot?.querySelector(".stopAnimation");
 
     const that = this;
 
-    animationBtn?.addEventListener("click", function () {
-      animationBtn.classList.toggle("active");
+    if (fromTab) {
+      animationBtn?.classList.toggle("active");
       that.getAllElementForRealDom("*").forEach((item) => {
         item.classList.toggle("corpoWid-animation-pause-_--");
       });
-    });
+    } else {
+      animationBtn?.addEventListener("click", function () {
+        animationBtn.classList.toggle("active");
+        that.getAllElementForRealDom("*").forEach((item) => {
+          item.classList.toggle("corpoWid-animation-pause-_--");
+        });
+      });
+    }
 
     return function reset() {
       animationBtn?.classList.remove("active");
@@ -777,7 +891,92 @@ class Event {
     };
   }
 
+  translateSpecificArea(fromTab: boolean) {
+    const that = this;
+
+    const translateBtn =
+      this.options.shadowDom?.shadowRoot?.querySelector(".translateSpecific");
+
+    const readMaskTranslate =
+      this.options.shadowDom?.shadowRoot?.getElementById("readMaskTranslate");
+
+    if (this.options.translation) {
+      if (fromTab) {
+        translateBtn?.classList.toggle("active");
+        readMaskTranslate?.classList.toggle("active");
+        readMaskTranslate?.classList.toggle("corpoWid-block-_--");
+        if (!this.activateTranslate) {
+          this.activateTranslate = true;
+        } else {
+          this.activateTranslate = false;
+        }
+      } else {
+        translateBtn?.addEventListener("click", function () {
+          translateBtn?.classList.toggle("active");
+          if (!that.activateTranslate) {
+            that.activateTranslate = true;
+          } else {
+            that.activateTranslate = false;
+          }
+        });
+      }
+
+      document.addEventListener("mouseup", function (e) {
+        const selected = window.getSelection();
+        const selectedText = selected?.toString();
+
+        if (selectedText)
+          if (selectedText.length > 0) {
+            if (that.activateTranslate) {
+              const path = window.location.pathname;
+              const siteLang = path.split("/")[path.split("/").length - 1];
+
+              const data = Service.getTranslateData({
+                siteLang,
+                translateLang: localStorage.getItem("corpoWid-lang") || "az",
+                content: selectedText,
+              });
+
+              data.then((res) => {
+                openPopup(res.responseData.translatedText, selected);
+              });
+            }
+          }
+      });
+    } else {
+      translateBtn?.classList.add("corpoWid-none-_--");
+    }
+
+    function openPopup(content: string, elem: Selection | null) {
+      const element = elem?.anchorNode?.parentNode as HTMLElement;
+
+      const offsetLeft = element.getBoundingClientRect().left;
+      const offsetTop = element.getBoundingClientRect().top;
+
+      const contentBox = document.createElement("span");
+      contentBox.className = "corpoWid-title-box__--__";
+      contentBox.textContent = content;
+      contentBox.style.left = offsetLeft + "px";
+      contentBox.style.top = offsetTop + element.offsetHeight + 20 + "px";
+      contentBox.style.width = element.offsetWidth + "px";
+      contentBox.style.minHeight = element.offsetHeight + "px";
+      element?.appendChild(contentBox);
+
+      document.querySelector("*")?.addEventListener("click", function () {
+        contentBox.remove();
+      });
+    }
+
+    return function reset() {};
+  }
+
   actionTab() {
+    this.getAllElementForRealDom("*").forEach((item) => {
+      if (!item.classList.contains("corpoWidShadow_r1cont-wrap")) {
+        (item as HTMLElement).tabIndex = -1;
+      }
+    });
+
     const allItems =
       this.options.shadowDom?.shadowRoot?.querySelectorAll(".wiuitem");
 
@@ -785,9 +984,12 @@ class Event {
 
     allItems?.forEach((item) => {
       item.addEventListener("keyup", function (e) {
-        if ((e as KeyboardEvent).key === "Enter") {
+        if ((e as KeyboardEvent).key === "Tab") {
+          that.options.shadowDom?.shadowRoot
+            ?.querySelector(".wiuwidgetBox")
+            ?.classList.add("active");
+        } else if ((e as KeyboardEvent).key === "Enter") {
           const getAttr = item.getAttribute("data-action");
-
           //@ts-ignore
           if (getAttr) that[getAttr](true);
         }
